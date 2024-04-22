@@ -52,6 +52,14 @@ if ($_POST) {
         /* Ajusta la imagen al tamaño del contenedor */
         background-repeat: no-repeat;
     }
+
+    /* Asterisco campos obligatorios */
+    .required::after {
+        content: "*";
+        color: red;
+     
+        margin-left: 4px;
+    }
 </style>
 
 <br>
@@ -61,16 +69,18 @@ if ($_POST) {
     </div>
     <div class="card-body">
 
-        <form action="" method="post" enctype="multipart/form-data">
+        <form action="" method="post" id="formularioCrearEquipo" enctype="multipart/form-data">
 
             <div class="mb-3">
-                <label for="numeropc" class="form-label">Equipo</label>
+                <label for="numeropc" class="form-label required">Equipo</label>
                 <input type="text" class="form-control" name="numeropc" id="numeropc" aria-describedby="helpId" placeholder="">
+                <span id="mensajeErrorNumeropc" style="display: none; color: red;">Completa este campo por favor</span>
             </div>
 
             <div class="mb-3">
-                <label for="serialpc" class="form-label">Serial PC</label>
+                <label for="serialpc" class="form-label required">Serial PC</label>
                 <input type="text" class="form-control" name="serialpc" id="serialpc" aria-describedby="helpId" placeholder="">
+                <span id="mensajeErrorSerialpc" style="display: none; color: red;">Completa este campo por favor</span>
             </div>
 
             <div class="mb-3">
@@ -79,8 +89,9 @@ if ($_POST) {
             </div>
 
             <div class="mb-3">
-                <label for="placa" class="form-label">Placa</label>
+                <label for="placa" class="form-label required">Placa</label>
                 <input type="text" class="form-control" name="placa" id="placa" aria-describedby="helpId" placeholder="">
+                <span id="mensajeErrorPlacapc" style="display: none; color: red;">Completa este campo por favor</span>
             </div>
 
             <div class="mb-3">
@@ -89,37 +100,43 @@ if ($_POST) {
             </div>
 
             <div class="mb-3">
-                <label for="fechacompra" class="form-label">Fecha De Compra</label>
+                <label for="fechacompra" class="form-label ">Fecha De Compra</label>
                 <input type="date" class="form-control" name="fechacompra" id="fechacompra" aria-describedby="helpId" placeholder="">
+                <span id="mensajeErrorFecha" style="display: none; color: red;">La fecha de compra no puede ser futura</span>
             </div>
 
             <div class="mb-3">
-                <label for="tipo" class="form-label">Tipo</label>
+                <label for="tipo" class="form-label required">Tipo</label>
                 <select class="form-select form-select-sm" name="tipo" id="tipo">
-                    <option selected>Select one</option>
+                    <option selected>Seleccione uno</option>
                     <option value="PORTATIL">PORTATIL</option>
                     <option value="ESCRITORIO">ESCRITORIO</option>
                 </select>
+                <span id="mensajeErrorTipopc" style="display: none; color: red;">Debes seleccionar un tipo</span>
             </div>
 
             <div class="mb-3">
-                <label for="ram" class="form-label">RAM</label>
+                <label for="ram" class="form-label required">RAM</label>
                 <input type="text" class="form-control" name="ram" id="ram" aria-describedby="helpId" placeholder="">
+                <span id="mensajeErrorRampc" style="display: none; color: red;">Completa este campo por favor</span>
             </div>
 
             <div class="mb-3">
-                <label for="procesador" class="form-label">Procesador</label>
+                <label for="procesador" class="form-label required">Procesador</label>
                 <input type="text" class="form-control" name="procesador" id="procesador" aria-describedby="helpId" placeholder="">
+                <span id="mensajeErrorProcesadorpc" style="display: none; color: red;">Completa este campo por favor</span>
             </div>
 
             <div class="mb-3">
-                <label for="marca" class="form-label">Marca</label>
+                <label for="marca" class="form-label required">Marca</label>
                 <input type="text" class="form-control" name="marca" id="marca" aria-describedby="helpId" placeholder="">
+                <span id="mensajeErrorMarcapc" style="display: none; color: red;">Completa este campo por favor</span>
             </div>
 
             <div class="mb-3">
-                <label for="almacenamiento" class="form-label">Almacenamiento</label>
+                <label for="almacenamiento" class="form-label required">Almacenamiento</label>
                 <input type="text" class="form-control" name="almacenamiento" id="almacenamiento" aria-describedby="helpId" placeholder="">
+                <span id="mensajeErrorAlmacenamientopc" style="display: none; color: red;">Completa este campo por favor</span>
             </div>
 
             <div class="mb-3">
@@ -135,5 +152,116 @@ if ($_POST) {
     </div>
     <div class="card-footer text-muted"></div>
 </div>
+
+<script>
+    
+    // Esperamos a que se cargue todo el contenido del DOM
+    document.addEventListener("DOMContentLoaded", function() {
+        // Seleccionamos el formulario por su ID
+        var form = document.getElementById('formularioCrearEquipo');
+
+        // Agregamos un listener para el evento submit del formulario
+        form.addEventListener('submit', function(event) {
+            // Evitamos que el formulario se envíe automáticamente
+            event.preventDefault();
+
+            // Obtenemos el valor del campo numeropc y lo recortamos
+            var numeropc = document.getElementById('numeropc').value.trim();
+            var serialpc = document.getElementById('serialpc').value.trim();
+            var placapc = document.getElementById('placa').value.trim();
+            var tipo  = document.getElementById('tipo').value;
+            var ram  = document.getElementById('ram').value.trim();
+            var procesador  = document.getElementById('procesador').value.trim();
+            var marca  = document.getElementById('marca').value.trim();
+            var almacenamiento  = document.getElementById('almacenamiento').value.trim();
+
+            // Verificamos si hay campos vacios
+            if (numeropc === '' || serialpc === '' || placapc === '' || tipo == 'Seleccione uno'|| ram === '' || procesador === '' || marca === '' || almacenamiento ==='') {
+
+                if(numeropc === ''){
+                    // Mostramos el mensaje de error
+                    document.getElementById('mensajeErrorNumeropc').style.display = 'inline';
+                }else{
+                    // En caso contrario, ocultamos el mensaje de error (si estaba visible)
+                    document.getElementById('mensajeErrorNumeropc').style.display = 'none';
+                }
+                
+                if (serialpc === ''){
+                    document.getElementById('mensajeErrorSerialpc').style.display = 'inline';
+                }else{
+                    document.getElementById('mensajeErrorSerialpc').style.display = 'none';
+                }
+
+                if (placapc === ''){
+                    document.getElementById('mensajeErrorPlacapc').style.display = 'inline';
+                }else{
+                    document.getElementById('mensajeErrorPlacapc').style.display = 'none';
+                }
+
+                if (tipo == 'Seleccione uno'){
+                    document.getElementById('mensajeErrorTipopc').style.display = 'inline';
+                }else{
+                    document.getElementById('mensajeErrorTipopc').style.display = 'none';
+                }
+
+                if (ram === ''){
+                    document.getElementById('mensajeErrorRampc').style.display = 'inline';
+                }else{
+                    document.getElementById('mensajeErrorRampc').style.display = 'none';
+                }
+
+                if (procesador === ''){
+                    document.getElementById('mensajeErrorProcesadorpc').style.display = 'inline';
+                }else{
+                    document.getElementById('mensajeErrorProcesadorpc').style.display = 'none';
+                }
+
+                if (marca === ''){
+                    document.getElementById('mensajeErrorMarcapc').style.display = 'inline';
+                }else{
+                    document.getElementById('mensajeErrorMarcapc').style.display = 'none';
+                }
+
+                if (almacenamiento === ''){
+                    document.getElementById('mensajeErrorAlmacenamientopc').style.display = 'inline';
+                }else{
+                    document.getElementById('mensajeErrorAlmacenamientopc').style.display = 'none';
+                }
+                console.log("hay campos vacios");
+
+               
+            } else {
+                // En caso contrario, ocultamos el mensaje de error (si estaba visible)
+                document.getElementById('mensajeErrorNumeropc').style.display = 'none';
+                document.getElementById('mensajeErrorSerialpc').style.display = 'none';
+                document.getElementById('mensajeErrorPlacapc').style.display = 'none';
+                document.getElementById('mensajeErrorTipopc').style.display = 'none';
+                document.getElementById('mensajeErrorRampc').style.display = 'none';
+                document.getElementById('mensajeErrorProcesadorpc').style.display = 'none';
+                document.getElementById('mensajeErrorMarcapc').style.display = 'none';
+                document.getElementById('mensajeErrorAlmacenamientopc').style.display = 'none';
+
+                console.log("todos los campos estan llenos y procedemos a enviar el formulario");
+
+                // Aquí puedes realizar alguna acción adicional, como enviar el formulario
+                form.submit(); // Esto enviaría el formulario, pero lo comenté para que lo manejes como desees
+            }
+        });
+    });
+
+
+    
+    document.getElementById('fechacompra').addEventListener('change', function() {
+        var fechaCompra = new Date(this.value); // Obtener la fecha de compra ingresada
+        var fechaActual = new Date(); // Obtener la fecha actual
+
+        // Comparar las fechas
+        if (fechaCompra > fechaActual) {
+            document.getElementById('mensajeErrorFecha').style.display = 'inline'; // Mostrar el span si la fecha de compra es futura
+        } else {
+            document.getElementById('mensajeErrorFecha').style.display = 'none'; // Ocultar el span si la fecha de compra es actual o anterior
+        }
+    });
+</script>
 
 <?php include("../../estructura/footer.php"); ?>
