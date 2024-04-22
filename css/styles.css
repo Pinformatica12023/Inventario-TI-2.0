@@ -1,0 +1,67 @@
+/* styles.css */
+body {
+    background-image: url('../img/FLA7.jpg'); /* Reemplaza con la ruta de tu imagen */
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.container-fluid {
+    background-color: rgba(255, 255, 255, 0.8); /* Cambia el color de fondo del contenido si lo deseas */
+    padding: 20px; /* Ajusta el espacio interior según tus necesidades */
+    border-radius: 10px; /* Agrega bordes redondeados al contenido */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Agrega sombra al contenido */
+}
+
+.login-container {
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 20px;
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.report-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+}
+
+.logo {
+    max-width: 100px;
+    margin-bottom: 20px;
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+.date {
+    text-align: right;
+}
+
+.compromise-text {
+    margin-bottom: 20px;
+}
+
+.details-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.signatures {
+    display: flex;
+    justify-content: space-between;
+}
+
+.signature-line {
+    flex: 1;
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+    margin-top: 10px;
+}
+
