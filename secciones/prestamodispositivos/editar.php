@@ -23,6 +23,18 @@ if (isset($_GET['txtID'])) {
         $acta = $registro_recuperado["acta"];
         $estado = $registro_recuperado["estado"];
         $observacion = $registro_recuperado["observacion"];
+
+        $sentenciaDispositivo = $conexion->prepare("SELECT * FROM dispositivos Where id=:dispositivo");
+        $sentenciaDispositivo->bindParam(":dispositivo", $dispositivo);
+        $sentenciaDispositivo->execute();
+
+        $registro_recuperadoDispositivo = $sentenciaDispositivo->fetch(PDO::FETCH_ASSOC);
+        if($registro_recuperadoDispositivo){
+            $nombreDispositivo = $registro_recuperadoDispositivo["nombredeldispositivo"];
+        }else{
+            $nombreDispositivo = "no esta encontrando el nombre";
+            echo ("hola");
+        }
     }
 }
 
@@ -146,6 +158,7 @@ $lista_dispositivos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
             <div class="mb-3">
                 <label for="dispositivo" class="form-label">Dispositivo</label>
                 <select value="<?php echo $registro_recuperado['dispositivo']; ?>" class="form-select form-select-sm" name="dispositivo" id="dispositivo">
+                <option value="<?php echo $registro_recuperado['dispositivo']; ?>" selected><?php echo $nombreDispositivo?></option>
                     <?php foreach ($lista_dispositivos as $registro) { ?>
                         <option value="<?php echo $registro['id'] ?>">
                             <?php echo $registro['nombredeldispositivo'] ?></option>

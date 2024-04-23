@@ -46,6 +46,22 @@ $sentencia->execute();
         })
 
     }
+
+
+    function finalizarPrestamo(id) {
+        Swal.fire({
+            title: '¿Seguro que desea Finalizar el préstamo?',
+            showCancelButton: true,
+            confirmButtonText: 'Si, Finalizar',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location = "index.php?ChangeStatusID=" + id;
+            }
+        })
+
+    }
+
+
 </script>
 
 <!--llamar tabla -->

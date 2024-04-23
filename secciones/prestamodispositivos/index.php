@@ -2,6 +2,24 @@
 
 <?php
 include("../../bd.php");
+if (isset($_GET['ChangeStatusID'])) {
+
+        $txtID = (isset($_GET['ChangeStatusID'])) ? $_GET['ChangeStatusID'] : "";
+        //Finalizado
+        $sentenciaCambioEstado  = $conexion->prepare("UPDATE prestamodispositivo SET Estado_prestamo  = 'FINALIZADO' WHERE id = :id");
+        $sentenciaCambioEstado->bindParam(":id",$txtID);
+        $sentenciaCambioEstado->execute();
+
+        //obtenemos el prestamo, para obtener el dispositivo y asi poder actualizarle la cantidad
+        $sentencia = $conexion->prepare("SELECT * FROM prestamodispositivo WHERE id = :id");
+        $sentencia->bindParam(":id",$txtID);
+    
+        $sentenciaCambioEstado = $conexion->prepare("UPDATE dispositivos SET cantidad = cantidad + 1 WHERE id = :id ");
+        $sentenciaCambioEstado->bindParam("",$txtID);
+        $mensaje = "Préstamo finalizado exitosamente";
+        header("Location:index.php?mensaje=" . $mensaje);
+}
+
 
 if (isset($_GET['txtID'])) {
     //Eliminar campo donde esta el id -->
@@ -110,6 +128,7 @@ $lista_prestamodispositivo = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                         <th scope="col">Acciones</th>
                         <th scope="col">Actas</th>
                         <th scope="col" class="hidden-column">Id</th>
+                        <th scope="col">Estado Préstamo</th>
                         <th scope="col">Identificación</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Dependencia</th>
@@ -129,12 +148,14 @@ $lista_prestamodispositivo = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                                 <td>
                                     <a class="btn btn-info" href="editar.php?txtID=<?php echo $registro['id']; ?>" role="button">Editar</a>
                                     |<a class="btn btn-danger" href="javascript:borrar(<?php echo $registro['id']; ?>);" role="button">Eliminar</a>
+                                    <a class="btn btn-success" href="javascript:finalizarPrestamo(<?php echo $registro['id']; ?>);" role="button">Finalizar</a>
                                 </td>
                                 <td>
                                     <a class="btn btn-dark" href="../../acta_entrega_devolucion/actaentregadispositivo.php?txtID=<?php echo $registro['id']; ?>" role="button" target="_blank">Entrega</a>
                                     |<a class="btn btn-warning" href="../../acta_entrega_devolucion/actadevoluciondispositivo.php?txtID=<?php echo $registro['id']; ?>" role="button" target="_blank">Devolución</a>
                                 </td>
                                 <td scope="row" class="hidden-column"><?php echo $registro['id']; ?></td>
+                                <td class="<?php echo $registro['Estado_prestamo'] == 'EN_CURSO' ? 'text-success' : 'text-danger'; ?>"><?php echo $registro['Estado_prestamo']; ?></td>
                                 <td><?php echo $registro['identificacion']; ?></td>
                                 <td><?php echo $registro['nombreusuario']; ?></td>
                                 <td><?php echo $registro['nombredependencia']; ?></td>
