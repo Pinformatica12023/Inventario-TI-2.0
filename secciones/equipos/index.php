@@ -84,6 +84,7 @@ $lista_equipos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
     <div class="card-header">
         <a name="" id="" class="btn btn-primary" href="crear.php" role="button">Agregar Equipos</a>
         <a href="../../exportarequipos.php" class="btn btn-success">Exportar a Excel</a>
+       
     </div>
     <div class="card-body">
 
@@ -95,16 +96,13 @@ $lista_equipos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                         <th scope="col" class="hidden-column">ID</th>
                         <th scope="col">Equipo</th>
                         <th scope="col">Serial PC</th>
-                        <th scope="col">Serial Cargador</th>
-                        <th scope="col">Placa</th>
-                        <th scope="col">Activo</th>
-                        <th scope="col">Fecha Compra</th>
+                       
                         <th scope="col">Tipo</th>
                         <th scope="col">RAM</th>
                         <th scope="col">Procesador</th>
                         <th scope="col">Marca</th>
                         <th scope="col">Almacenamiento</th>
-                        <th scope="col">Observación</th>
+                       
                         
                     </tr>
                 </thead>
@@ -117,20 +115,73 @@ $lista_equipos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                                 <td>
                                     <a class="btn btn-info" href="editar.php?txtID=<?php echo $registro['id']; ?>" role="button">Editar</a>
                                     |<a class="btn btn-danger" href="javascript:borrar(<?php echo $registro['id']; ?>);" role="button">Eliminar</a>
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#info<?php echo $registro["id"] ?>">
+                                    ver información
+                                    </button>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="info<?php  echo $registro["id"] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Detalles equipo: <?php echo $registro['numeropc'] ?></h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <label for="" class="form-label fs-5 fw-bold">Serial cargador</label>
+                                                    <input type="text" class="form-control" readonly value="<?php if($registro['serialcargador']==""){
+                                                        echo "No hay registrado un serial de cargador para este equipo";
+                                                    }else{
+                                                        echo $registro['serialcargador'];
+                                                    }?>">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="" class="form-label fs-5">placa</label>
+                                                    <input type="text" class="form-control" readonly value=<?php if($registro["placa"]==""){echo "No hay registrado una placa para este equipo";}else{echo $registro["placa"];}?>>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="" class="form-label fs-5">Activo</label>
+                                                    <input type="text" class="form-control" readonly value=<?php if($registro["activo"]==""){echo "No hay registrado un activo para este equipo";}else{echo $registro["activo"];}?>>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="" class="form-label fs-5 fw-bold">Fecha Compra:</label>
+                                                    <input type="date" class="form-control" readonly value="<?php if($registro["fechacompra"]==null){
+                                                        echo "No hay fecha de compra registrada en este equipo";
+                                                    }else{
+                                                        echo $registro["fechacompra"];
+                                                    } ?>">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="" class="form-label fs-5 fw-bold">Obsevaciones</label>
+                                                    <textarea readonly  class="form-control"> <?php if($registro['observacion']==""){
+                                                        echo "No hay Observaciones en este equipo";
+                                                    }else{
+                                                        echo $registro["observacion"];
+                                                    } ?></textarea>
+                                                </div>
+
+                                              
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                             
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                                 <td scope="row" class="hidden-column"><?php echo $registro['id']; ?></td>
                                 <td><?php echo $registro['numeropc']; ?></td>
-                                <td><?php echo $registro['serialpc']; ?></td>
-                                <td><?php echo $registro['serialcargador']; ?></td>
-                                <td><?php echo $registro['placa']; ?></td>
-                                <td><?php echo $registro['activo']; ?></td>
-                                <td><?php echo $registro['fechacompra']; ?></td>
+                                <td><?php echo $registro['serialpc']; ?></td>                           
+                                
                                 <td><?php echo $registro['tipo']; ?></td>
                                 <td><?php echo $registro['ram']; ?></td>
                                 <td><?php echo $registro['procesador']; ?></td>
                                 <td><?php echo $registro['marca']; ?></td>
                                 <td><?php echo $registro['almacenamiento']; ?></td>
-                                <td><?php echo $registro['observacion']; ?></td>                            
+                                                          
                             </tr>
                     <?php
                         }

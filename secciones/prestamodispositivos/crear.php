@@ -124,6 +124,13 @@ $lista_dispositivos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
             <br>
 
             <script>
+                $(document).ready(function(){
+                    $('#dispositivo').select2();
+                })
+
+            </script>
+
+            <script>
                 $(document).ready(function() {
                     $('#dispositivo').on('change', function() {
                         var dispositivoSeleccionado = $(this).val();
@@ -146,6 +153,8 @@ $lista_dispositivos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                     });
                 });
             </script>
+
+            
 
             <div class="mb-3">
                 <label for="fechadispositivo" class="form-label">Fecha Asignación</label>

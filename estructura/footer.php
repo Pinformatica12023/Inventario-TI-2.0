@@ -71,11 +71,11 @@ $sentencia->execute();
             "order": [
                 [0, 'desc']
             ], // Ordena la primera columna (ID) de manera descendente
-            "responsive": false, // Deshabilita la funcionalidad responsive
-            "pageLength": 5,
+           
+            "pageLength": 15,
             "lengthMenu": [
-                [5, 10, 25, 50],
-                [5, 10, 25, 50]
+                [15, 30, 50],
+                [15, 30, 50]
             ],
             "language": {
                 "url": "https://cdn.datatables.net/plug-ins/1.13.1/i18n/es-ES.json"
@@ -83,6 +83,32 @@ $sentencia->execute();
         });
     });
 </script>
+
+<script>
+    document.querySelectorAll('.nav-link').forEach(navLink => {
+        navLink.addEventListener('click', function() {
+            // Almacenar el identificador de la pestaña activa
+            localStorage.setItem('activeTab', this.getAttribute('data-tab'));
+            // Aplicar la clase active a la pestaña clickeada
+            this.classList.add('active');
+        });
+    });
+    // Al cargar la página, recuperar y aplicar el estado de la pestaña activa
+    window.onload = function() {
+    const activeTab = localStorage.getItem('activeTab');
+    if (activeTab) {
+        document.querySelectorAll('.nav-link').forEach(navLink => {
+        if (navLink.getAttribute('data-tab') === activeTab) {
+            navLink.classList.add('active');
+        } else {
+            navLink.classList.remove('active');
+        }
+        });
+    }
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 </body>
 

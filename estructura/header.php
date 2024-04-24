@@ -47,14 +47,25 @@ if (!isset($_SESSION['usuario'])) {
     <!-- Fondo sistema Web -->
     <link rel="stylesheet" href="../css/styles.css"> 
 
+    <!--select2 (buscador en select) -->
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    
+
     <style>
-        body {
+        /* body {
             background-image: url('img/FLA8.jpg'); 
             background-size: cover;
             background-repeat: no-repeat;
+        } */
+
+        .nav-link.active {
+            background-color: #9de0ad; /* Cambia el color de fondo */
+            color: white; /* Cambia el color del texto */
+            
         }
     </style>
-    <link rel="stylesheet" href="styles.css">
+   
 
 
 </head>
@@ -69,19 +80,19 @@ if (!isset($_SESSION['usuario'])) {
         <nav class="navbar navbar-expand navbar-light bg-light">
             <ul class="nav navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link active" href="<?php echo $url_base; ?>index.php" aria-current="page">Sistema Web<span class="visually-hidden">(current)</span></a>
+                    <a  class="nav-link active" href="<?php echo $url_base; ?>index.php" data-tab="Inicio" aria-current="page">Sistema Web<span class="visually-hidden">(current)</span> </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href=" <?php echo $url_base; ?>secciones/prestamoequipos/">PrestamoEquipos</a>
+                    <a class="nav-link" href=" <?php echo $url_base; ?>secciones/prestamoequipos/" data-tab="PrestamoEquipos">PrestamoEquipos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php echo $url_base; ?>secciones/prestamodispositivos/">PrestamoDispositivos</a>
+                    <a class="nav-link" href="<?php echo $url_base; ?>secciones/prestamodispositivos/" data-tab="PrestamoDispositivos">PrestamoDispositivos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php echo $url_base; ?>secciones/equipos/">Equipos</a>
+                    <a class="nav-link" href="<?php echo $url_base; ?>secciones/equipos/" data-tab="Equipos">Equipos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php echo $url_base; ?>secciones/dispositivos/">Dispositivos</a>
+                    <a class="nav-link" href="<?php echo $url_base; ?>secciones/dispositivos/" data-tab="Dispositivos">Dispositivos</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="<?php echo $url_base; ?>secciones/docks/">Docks</a>
@@ -100,3 +111,4 @@ if (!isset($_SESSION['usuario'])) {
         Swal.fire({icon: "success",title: "<?php echo $_GET['mensaje']; ?>"});
     </script>
 <?php } ?>
+
