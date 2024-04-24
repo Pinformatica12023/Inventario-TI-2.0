@@ -2,6 +2,7 @@
 <?php
 include("../../bd.php");
 
+
 if ($_POST) {
     //Recolectamos los datos del método POST (Datos activo)
     $identificacion = (isset($_POST["identificacion"]) ? $_POST["identificacion"] : "");
@@ -16,37 +17,52 @@ if ($_POST) {
     $estado = (isset($_POST["estado"]) ? $_POST["estado"] : "");
     $observacion = (isset($_POST["observacion"]) ? $_POST["observacion"] : "");
 
-    //Preparar la insercción de los datos
-    $sentencia = $conexion->prepare("INSERT INTO prestamoequipo(id,identificacion,nombre,dependencia,
-    modelo,serialpc,serialcargador,marca,fechaequipo,acta,estado,observacion) 
-    VALUES (NULL,:identificacion,:nombre,:dependencia,:modelo,:serialpc,:serialcargador,:marca,:fechaequipo,:acta,:estado,:observacion);");
 
-
-    //Visualizar archivo PDF
-    $fecha_acta = new DateTime();
-
-    $nombreaArchivo_Acta = ($acta != '') ? $fecha_acta->getTimestamp() . "_" . $_FILES["acta"]['name'] : "";
-    $tmp_acta = $_FILES["acta"]['tmp_name'];
-    if ($tmp_acta != '') {
-        move_uploaded_file($tmp_acta, "../../secciones/actas/" . $nombreaArchivo_Acta);
-    }
-
-    //Asignando los valores que vienen del método POST (los que vienen del formulario)
-    $sentencia->bindParam(":identificacion", $identificacion);
-    $sentencia->bindParam(":nombre", $nombre);
-    $sentencia->bindParam(":dependencia", $dependencia);
-    $sentencia->bindParam(":modelo", $modelo);
-    $sentencia->bindParam(":serialpc", $serialpc);
-    $sentencia->bindParam(":serialcargador", $serialcargador);
-    $sentencia->bindParam(":marca", $marca);
-    $sentencia->bindParam(":fechaequipo", $fechaequipo);
-    $sentencia->bindParam(":acta", $nombreaArchivo_Acta);
-    $sentencia->bindParam(":estado", $estado);
-    $sentencia->bindParam(":observacion", $observacion);
+    $sentencia  = $conexion->prepare("SELECT* FROM prestamoequipo WHERE modelo = :modelo");
+    $sentencia->bindParam(":modelo",$modelo);
     $sentencia->execute();
-    $mensaje = "Registro agregado";
-    header("Location:index.php?mensaje=" . $mensaje);
+    $prestamoEncontrado  = $sentencia->fetchAll(PDO::FETCH_ASSOC);
+
+    if ($prestamoEncontrado!=null) {
+        $mensaje = "No se pudo realizar la acción ya que este equipo ya ha sido asignado";
+        header("Location:crear.php?mensaje=" . $mensaje);
+       
+    }else{
+        //Preparar la insercción de los datos
+        $sentencia = $conexion->prepare("INSERT INTO prestamoequipo(id,identificacion,nombre,dependencia,
+        modelo,serialpc,serialcargador,marca,fechaequipo,acta,estado,observacion) 
+        VALUES (NULL,:identificacion,:nombre,:dependencia,:modelo,:serialpc,:serialcargador,:marca,:fechaequipo,:acta,:estado,:observacion);");
+
+
+        //Visualizar archivo PDF
+        $fecha_acta = new DateTime();
+
+        $nombreaArchivo_Acta = ($acta != '') ? $fecha_acta->getTimestamp() . "_" . $_FILES["acta"]['name'] : "";
+        $tmp_acta = $_FILES["acta"]['tmp_name'];
+        if ($tmp_acta != '') {
+            move_uploaded_file($tmp_acta, "../../secciones/actas/" . $nombreaArchivo_Acta);
+        }
+
+        //Asignando los valores que vienen del método POST (los que vienen del formulario)
+        $sentencia->bindParam(":identificacion", $identificacion);
+        $sentencia->bindParam(":nombre", $nombre);
+        $sentencia->bindParam(":dependencia", $dependencia);
+        $sentencia->bindParam(":modelo", $modelo);
+        $sentencia->bindParam(":serialpc", $serialpc);
+        $sentencia->bindParam(":serialcargador", $serialcargador);
+        $sentencia->bindParam(":marca", $marca);
+        $sentencia->bindParam(":fechaequipo", $fechaequipo);
+        $sentencia->bindParam(":acta", $nombreaArchivo_Acta);
+        $sentencia->bindParam(":estado", $estado);
+        $sentencia->bindParam(":observacion", $observacion);
+        $sentencia->execute();
+        $mensaje = "Registro agregado";
+        header("Location:index.php?mensaje=" . $mensaje);
+    }
 }
+
+
+
 
 $sentencia = $conexion->prepare("SELECT * FROM equipos");
 $sentencia->execute();
@@ -72,6 +88,8 @@ $lista_equipos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
         Prestamo Equipos
     </div>
     <div class="card-body">
+
+ 
 
         <form action="" method="post" enctype="multipart/form-data">
 
@@ -140,6 +158,7 @@ $lista_equipos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                 <label for="observacion" class="form-label">Observación</label>
                 <input type="text" class="form-control" name="observacion" id="observacion" aria-describedby="helpId" placeholder="">
             </div>
+            
 
             <button type="submit" class="btn btn-success">Agregar Registro</button>
             <a name="" id="" class="btn btn-primary" href="index.php" role="button">Cancelar</a>
@@ -205,4 +224,13 @@ $lista_equipos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
     <div class="card-footer text-muted"></div>
 </div>
 
+
+
 <?php include("../../estructura/footer.php"); ?>
+<?php
+if (isset($_GET['mensaje'])) { ?>
+    <script>
+        Swal.fire({icon: "error",title: "<?php echo $_GET['mensaje']; ?>"});
+    </script>
+    <?php
+ }  ?>

@@ -15,7 +15,7 @@ if (isset($_GET['txtID'])) {
 }
 
 //Mostrar registros
-$sentencia = $conexion->prepare("SELECT * FROM equipos ORDER BY id DESC");
+$sentencia = $conexion->prepare("SELECT * FROM equipos ORDER BY Estado");
 $sentencia->execute();
 $lista_equipos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -31,6 +31,7 @@ $lista_equipos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
         background-repeat: no-repeat;
     }
 </style>
+
 
 <!--Fondo transparente para el cuadro -->
 <style>
@@ -51,12 +52,12 @@ $lista_equipos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
     #tabla_id th,
     #tabla_id td {
         white-space: nowrap;
-        font-size: 10px;
+        font-size: 15px;
         /* Reducir aún más el tamaño de la fuente */
     }
 
     #tabla_id .btn {
-        font-size: 10px;
+        font-size: 15px;
         /* Reducir el tamaño de la fuente de los botones */
         padding: 3px 8px;
         /* Ajustar el relleno para adaptarse al nuevo tamaño */
@@ -97,14 +98,11 @@ $lista_equipos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                         <th scope="col" class="hidden-column">ID</th>
                         <th scope="col">Equipo</th>
                         <th scope="col">Serial PC</th>
-                       
                         <th scope="col">Tipo</th>
-                        <th scope="col">RAM</th>
+                        <th scope="col">Estado</th>
                         <th scope="col">Procesador</th>
                         <th scope="col">Marca</th>
-                        <th scope="col">Almacenamiento</th>
-                       
-                        
+
                     </tr>
                 </thead>
                 <tbody>
@@ -131,8 +129,8 @@ $lista_equipos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                                             </div>
                                             <div class="modal-body">
                                                 <div class="form-group">
-                                                    <label for="" class="form-label fs-5 fw-bold">Serial cargador</label>
-                                                    <input type="text" class="form-control" readonly value="<?php if($registro['serialcargador']==""){
+                                                    <label for="" class="form-label fs-5 ">Serial cargador</label>
+                                                    <input type="text" class="form-control" readonly value="<?php if($registro['serialcargador']=="" || $registro["serialcargador"]==null){
                                                         echo "No hay registrado un serial de cargador para este equipo";
                                                     }else{
                                                         echo $registro['serialcargador'];
@@ -140,14 +138,18 @@ $lista_equipos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="" class="form-label fs-5">placa</label>
-                                                    <input type="text" class="form-control" readonly value=<?php if($registro["placa"]==""){echo "No hay registrado una placa para este equipo";}else{echo $registro["placa"];}?>>
+                                                    <input type="text" class="form-control" readonly value=<?php if($registro["placa"]=="" || $registro["placa"]==null){echo "No hay registrado una placa para este equipo";}else{echo $registro["placa"];}?>>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="" class="form-label fs-5">Activo</label>
-                                                    <input type="text" class="form-control" readonly value=<?php if($registro["activo"]==""){echo "No hay registrado un activo para este equipo";}else{echo $registro["activo"];}?>>
+                                                    <input type="text" class="form-control" readonly value=<?php if($registro["activo"]=="" || $registro["activo"]==null){echo "No hay registrado un activo para este equipo";}else{echo $registro["activo"];}?>>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="" class="form-label fs-5 fw-bold">Fecha Compra:</label>
+                                                    <label for="" class="form-label fs-5">Almacenamiento</label>
+                                                    <input type="text" class="form-control" readonly value=<?php if($registro["almacenamiento"]=="" || $registro["almacenamiento"]==null ){echo "No hay registrado un almacenamiento para este equipo";}else{echo $registro["almacenamiento"];}?>>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="" class="form-label fs-5 ">Fecha Compra:</label>
                                                     <input type="date" class="form-control" readonly value="<?php if($registro["fechacompra"]==null){
                                                         echo "No hay fecha de compra registrada en este equipo";
                                                     }else{
@@ -155,7 +157,7 @@ $lista_equipos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                                                     } ?>">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="" class="form-label fs-5 fw-bold">Obsevaciones</label>
+                                                    <label for="" class="form-label fs-5 ">Obsevaciones</label>
                                                     <textarea readonly  class="form-control"> <?php if($registro['observacion']==""){
                                                         echo "No hay Observaciones en este equipo";
                                                     }else{
@@ -176,12 +178,11 @@ $lista_equipos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                                 <td scope="row" class="hidden-column"><?php echo $registro['id']; ?></td>
                                 <td><?php echo $registro['numeropc']; ?></td>
                                 <td><?php echo $registro['serialpc']; ?></td>                           
-                                
                                 <td><?php echo $registro['tipo']; ?></td>
-                                <td><?php echo $registro['ram']; ?></td>
+                                <td class="<?php echo $registro['Estado'] == 'DISPONIBLE' ? 'text-success' : 'text-danger'; ?>"><?php echo $registro['Estado']; ?></td>
                                 <td><?php echo $registro['procesador']; ?></td>
                                 <td><?php echo $registro['marca']; ?></td>
-                                <td><?php echo $registro['almacenamiento']; ?></td>
+                               
                                                           
                             </tr>
                     <?php
