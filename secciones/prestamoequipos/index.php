@@ -96,7 +96,7 @@ $lista_prestamoequipo = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
 
 <br />
-
+<h1 class="text-center fw-bold">Préstamo equipos</h1>
 <div class="card card-transparent">
     <div class="card-header">
         <a name="" id="" class="btn btn-primary" href="crear.php" role="button">Agregar Prestamo</a>

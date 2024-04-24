@@ -79,11 +79,12 @@ $lista_equipos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
 
 <br />
-
+<h1 class="text-center fw-bold">Equipos</h1>
 <div class="card card-transparent">
     <div class="card-header">
         <a name="" id="" class="btn btn-primary" href="crear.php" role="button">Agregar Equipos</a>
         <a href="../../exportarequipos.php" class="btn btn-success">Exportar a Excel</a>
+    
        
     </div>
     <div class="card-body">

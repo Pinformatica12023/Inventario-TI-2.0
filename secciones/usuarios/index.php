@@ -81,7 +81,7 @@ $lista_usuarios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
 
 <br />
-
+<h1 class="fw-bold text-center">Usuarios</h1>
 <div class="card card-transparent">
     <div class="card-header">
         <a name="" id="" class="btn btn-primary" href="crear.php" role="button">Agregar Usuario</a>

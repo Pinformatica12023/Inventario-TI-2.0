@@ -136,7 +136,7 @@ $lista_prestamodispositivo = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
 
 <br />
-<H1 class="fw-bold ">Préstamo Dispositivos</H1>
+<H1 class="fw-bold text-center ">Préstamo Dispositivos</H1>
 
     <div class="col-lg-12 col-12" style="width: 1500px;">
         <div class="card card-transparent">
