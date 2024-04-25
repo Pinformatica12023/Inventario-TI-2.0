@@ -134,76 +134,85 @@ $lista_dispositivos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
     <div class="card-body">
 
         <form action="" method="post" enctype="multipart/form-data">
+            <div class="row">
 
-            <div class="mb-3">
-                <label for="txtID" class="form-label">ID</label>
-                <input type="text" value="<?php echo $txtID; ?>" readonly class="form-control" name="txtID" id="txtId" aria-describedby="helpId" placeholder="ID">
+                <div class="mb-3 col-lg-6">
+                    <label for="txtID" class="form-label">ID</label>
+                    <input type="text" value="<?php echo $txtID; ?>" readonly class="form-control" name="txtID" id="txtId" aria-describedby="helpId" placeholder="ID">
+                </div>
+
+                <div class="mb-3 col-lg-6">
+                    <label for="estado" class="form-label">Estado</label>
+                    <select disabled value="<?php echo $registro_recuperado['Estado_prestamo']; ?>" class="form-select " name="estado" id="estado">
+                        <option value="EN_CURSO">EN CURSO</option>
+                        <option value="FINALIZADO">FINALIZADO</option>
+                    </select>
+                </div>
+
+                <div class="mb-3 col-lg-6">
+                    <label for="identificacion" class="form-label">Identificación</label>
+                    <input type="text" readonly value="<?php echo $registro_recuperado['identificacion']; ?>" class="form-control" name="identificacion" id="identificacion" readonly>
+                </div>
+
+                <div class="mb-3 col-lg-6">
+                    <label for="nombreusuario" class="form-label">Nombre</label>
+                    <input type="text" value="<?php echo $registro_recuperado['nombreusuario']; ?>" class="form-control" name="nombreusuario" id="nombreusuario" readonly>
+                </div>
+
+                <div class="mb-3 col-lg-6">
+                    <label for="nombredependencia" class="form-label">Dependencia</label>
+                    <input type="text" value="<?php echo $registro_recuperado['nombredependencia']; ?>" class="form-control" name="nombredependencia" id="nombredependencia" readonly>
+                </div>
+
+                <div class="mb-3 col-lg-6">
+                    <label for="fechadispositivo" class="form-label">Fecha Asignación</label>
+                    <input type="date" value="<?php echo $registro_recuperado['fechadispositivo']; ?>" class="form-control" name="fechadispositivo" id="fechadispositivo" aria-describedby="helpId" placeholder="">
+                </div>
+
+                <div class=" col-lg-6">
+                    <label for="dispositivo" class="form-label">Dispositivo</label>
+                    <select disabled value="<?php echo $registro_recuperado['dispositivo']; ?>" class="form-select " name="dispositivo" id="dispositivo">
+                    <option value="<?php echo $registro_recuperado['dispositivo']; ?>" selected><?php echo $nombreDispositivo?></option>
+                        <?php foreach ($lista_dispositivos as $registro) { ?>
+                            <option value="<?php echo $registro['id'] ?>">
+                                <?php echo $registro['nombredeldispositivo'] ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+                 <!-- Acta -->
+                 <div class=" col-lg-6">
+                    <label for="acta" class="form-label">Acta:</label>
+                    <input type="file" value="<?php echo $registro_recuperado['acta']; ?>" name="acta" class="form-control">
+                    <br>
+                    
+                    <?php
+                    // Mostrar el enlace al archivo acta (si existe)
+                    if (!empty($registro_recuperado['acta'])) {
+                        echo '<a href="../../secciones/actas/' . $registro_recuperado['acta'] . '">' . $registro_recuperado['acta'] . '</a>';
+                    }else{
+                        ?>
+                        <p class="text-danger"> <?php echo "No hay actas registradas en este prestamo"; ?></p>
+                    <?php 
+                    }
+                    ?>
+                </div>
+
+                <div class="mb-3">
+                    <label for="observacion" class="form-label">Observación</label>
+                    <input type="text" value="<?php echo $registro_recuperado['observacion']; ?>" class="form-control" name="observacion" id="observacion" aria-describedby="helpId" placeholder="">
+                </div>
+                
             </div>
-
-            <div class="mb-3">
-                <label for="identificacion" class="form-label">Identificación</label>
-                <input type="text" value="<?php echo $registro_recuperado['identificacion']; ?>" class="form-control" name="identificacion" id="identificacion" readonly>
+            
+            <div class="text-end" >
+                <button type="submit" class="btn btn-success ">Agregar</button>
+                <a name="" id="" class="btn btn-primary " href="index.php" role="button">Cancelar</a>
             </div>
-
-            <div class="mb-3">
-                <label for="nombreusuario" class="form-label">Nombre</label>
-                <input type="text" value="<?php echo $registro_recuperado['nombreusuario']; ?>" class="form-control" name="nombreusuario" id="nombreusuario" readonly>
-            </div>
-
-            <div class="mb-3">
-                <label for="nombredependencia" class="form-label">Dependencia</label>
-                <input type="text" value="<?php echo $registro_recuperado['nombredependencia']; ?>" class="form-control" name="nombredependencia" id="nombredependencia" readonly>
-            </div>
-
-            <div class="mb-3">
-                <label for="dispositivo" class="form-label">Dispositivo</label>
-                <select value="<?php echo $registro_recuperado['dispositivo']; ?>" class="form-select form-select-sm" name="dispositivo" id="dispositivo">
-                <option value="<?php echo $registro_recuperado['dispositivo']; ?>" selected><?php echo $nombreDispositivo?></option>
-                    <?php foreach ($lista_dispositivos as $registro) { ?>
-                        <option value="<?php echo $registro['id'] ?>">
-                            <?php echo $registro['nombredeldispositivo'] ?></option>
-                    <?php } ?>
-                </select>
-            </div>
-
-            <div class="mb-3">
-                <label for="fechadispositivo" class="form-label">Fecha Asignación</label>
-                <input type="date" value="<?php echo $registro_recuperado['fechadispositivo']; ?>" class="form-control" name="fechadispositivo" id="fechadispositivo" aria-describedby="helpId" placeholder="">
-            </div>
-
-            <!-- Acta -->
-            <div class="mb-3">
-                <label for="acta" class="form-label">Acta:</label>
-                <input type="file" value="<?php echo $registro_recuperado['acta']; ?>" name="acta" class="form-control">
-                <br>
-                <?php
-                // Mostrar el enlace al archivo acta (si existe)
-                if (!empty($registro_recuperado['acta'])) {
-                    echo '<a href="../../secciones/actas/' . $registro_recuperado['acta'] . '">' . $registro_recuperado['acta'] . '</a>';
-                }
-                ?>
-            </div>
-
-            <div class="mb-3">
-                <label for="estado" class="form-label">Estado</label>
-                <select value="<?php echo $registro_recuperado['estado']; ?>" class="form-select form-select-sm" name="estado" id="estado">
-                    <option value="En uso">En uso</option>
-                    <option value="Sin uso">Sin uso</option>
-                </select>
-            </div>
-
-            <div class="mb-3">
-                <label for="observacion" class="form-label">Observación</label>
-                <input type="text" value="<?php echo $registro_recuperado['observacion']; ?>" class="form-control" name="observacion" id="observacion" aria-describedby="helpId" placeholder="">
-            </div>
-
-            <button type="submit" class="btn btn-success">Agregar</button>
-            <a name="" id="" class="btn btn-primary" href="index.php" role="button">Cancelar</a>
 
         </form>
 
 
-    </div>
+
     <div class="card-footer text-muted"></div>
 </div>
 

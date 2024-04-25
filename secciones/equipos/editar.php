@@ -92,76 +92,78 @@ if ($_POST) {
     <div class="card-body">
 
         <form action="" method="post" enctype="multipart/form-data">
+            <div class="row">
 
-            <div class="mb-3">
-                <label for="txtID" class="form-label">ID</label>
-                <input type="text" value="<?php echo $txtID; ?>" readonly class="form-control" name="txtID" id="txtId" aria-describedby="helpId" placeholder="ID">
+                <div class="mb-3 col-lg-6">
+                    <label for="txtID" class="form-label">ID</label>
+                    <input type="text" value="<?php echo $txtID; ?>" readonly class="form-control" name="txtID" id="txtId" aria-describedby="helpId" placeholder="ID">
+                </div>
+
+                <div class="mb-3 col-lg-6">
+                    <label for="numeropc" class="form-label">Equipo</label>
+                    <input type="text" readonly value="<?php echo $registro_recuperado['numeropc']; ?>" class="form-control" name="numeropc" id="numeropc" aria-describedby="helpId" placeholder="">
+                </div>
+
+                <div class="mb-3 col-lg-6">
+                    <label for="serialpc" class="form-label">Serial PC</label>
+                    <input readonly type="text" value="<?php echo $registro_recuperado['serialpc']; ?>" class="form-control" name="serialpc" id="serialpc" aria-describedby="helpId" placeholder="">
+                </div>
+
+                <div class="mb-3 col-lg-6">
+                    <label for="serialcargador" class="form-label">Serial Cargador</label>
+                    <input type="text" value="<?php echo $registro_recuperado['serialcargador']; ?>"  class="form-control" name="serialcargador" id="serialcargador" aria-describedby="helpId" placeholder="" >
+                </div> 
+
+                <div class="mb-3 col-lg-6">
+                    <label for="placa" class="form-label">Placa</label>
+                    <input readonly type="text" value="<?php echo $registro_recuperado['placa']; ?>" class="form-control" name="placa" id="placa" aria-describedby="helpId" placeholder="">
+                </div>
+
+                <div class="mb-3 col-lg-6">
+                    <label for="activo" class="form-label">Proveedor</label>
+                    <input readonly type="text" value="<?php echo $registro_recuperado['activo']; ?>" class="form-control" name="activo" id="activo" aria-describedby="helpId" placeholder="">
+                </div>
+
+                <div class="mb-3 col-lg-6">
+                    <label for="fechacompra" class="form-label">Fecha De Compra</label>
+                    <input type="date" value="<?php echo $registro_recuperado['fechacompra']; ?>" class="form-control" name="fechacompra" id="fechacompra" aria-describedby="helpId" placeholder="">
+                </div>
+
+                <div class="mb-3 col-lg-6">
+                    <label for="tipo" class="form-label">Tipo</label>
+                    <select  value="<?php echo $registro_recuperado['tipo']; ?>" class="form-select form-select-sm" name="tipo" id="tipo" disabled>
+                        <option selected><?php echo $registro_recuperado['tipo'] ?></option>
+                        <option value="PORTATIL">PORTATIL</option>
+                        <option value="ESCRITORIO">ESCRITORIO</option>
+                    </select>
+                </div>
+
+                <div class="mb-3 col-lg-6">
+                    <label for="ram" class="form-label">RAM</label>
+                    <input type="text" value="<?php echo $registro_recuperado['ram']; ?>" class="form-control" name="ram" id="ram" aria-describedby="helpId" placeholder="">
+                </div>
+
+                <div class="mb-3 col-lg-6">
+                    <label for="procesador" class="form-label">Procesador</label>
+                    <input readonly type="text" value="<?php echo $registro_recuperado['procesador']; ?>" class="form-control" name="procesador" id="procesador" aria-describedby="helpId" placeholder="">
+                </div>
+
+                <div class="mb-3 col-lg-6">
+                    <label for="marca" class="form-label">Marca</label>
+                    <input readonly type="text" value="<?php echo $registro_recuperado['marca']; ?>" class="form-control" name="marca" id="marca" aria-describedby="helpId" placeholder="">
+                </div>
+
+                <div class="mb-3 col-lg-6">
+                    <label for="almacenamiento" class="form-label">Almacenamiento</label>
+                    <input type="text" value="<?php echo $registro_recuperado['almacenamiento']; ?>" class="form-control" name="almacenamiento" id="almacenamiento" aria-describedby="helpId" placeholder="">
+                </div>
+
+                <div class="mb-3 col-lg-6">
+                    <label for="observacion" class="form-label">Observacion</label>
+                    <input type="text" value="<?php echo $registro_recuperado['observacion']; ?>" class="form-control" name="observacion" id="observacion" aria-describedby="helpId" placeholder="">
+                </div>
+            
             </div>
-
-            <div class="mb-3">
-                <label for="numeropc" class="form-label">Equipo</label>
-                <input type="text" value="<?php echo $registro_recuperado['numeropc']; ?>" class="form-control" name="numeropc" id="numeropc" aria-describedby="helpId" placeholder="">
-            </div>
-
-            <div class="mb-3">
-                <label for="serialpc" class="form-label">Serial PC</label>
-                <input type="text" value="<?php echo $registro_recuperado['serialpc']; ?>" class="form-control" name="serialpc" id="serialpc" aria-describedby="helpId" placeholder="">
-            </div>
-
-            <div class="mb-3">
-                <label for="serialcargador" class="form-label">Serial Cargador</label>
-                <input type="text" value="<?php echo $registro_recuperado['serialcargador']; ?>"  class="form-control" name="serialcargador" id="serialcargador" aria-describedby="helpId" placeholder="" >
-            </div> 
-
-            <div class="mb-3">
-                <label for="placa" class="form-label">Placa</label>
-                <input type="text" value="<?php echo $registro_recuperado['placa']; ?>" class="form-control" name="placa" id="placa" aria-describedby="helpId" placeholder="">
-            </div>
-
-            <div class="mb-3">
-                <label for="activo" class="form-label">Activo</label>
-                <input type="text" value="<?php echo $registro_recuperado['activo']; ?>" class="form-control" name="activo" id="activo" aria-describedby="helpId" placeholder="">
-            </div>
-
-            <div class="mb-3">
-                <label for="fechacompra" class="form-label">Fecha De Compra</label>
-                <input type="date" value="<?php echo $registro_recuperado['fechacompra']; ?>" class="form-control" name="fechacompra" id="fechacompra" aria-describedby="helpId" placeholder="">
-            </div>
-
-            <div class="mb-3">
-                <label for="tipo" class="form-label">Tipo</label>
-                <select value="<?php echo $registro_recuperado['tipo']; ?>" class="form-select form-select-sm" name="tipo" id="tipo">
-                    <option selected>Select one</option>
-                    <option value="PORTATIL">PORTATIL</option>
-                    <option value="ESCRITORIO">ESCRITORIO</option>
-                </select>
-            </div>
-
-            <div class="mb-3">
-                <label for="ram" class="form-label">RAM</label>
-                <input type="text" value="<?php echo $registro_recuperado['ram']; ?>" class="form-control" name="ram" id="ram" aria-describedby="helpId" placeholder="">
-            </div>
-
-            <div class="mb-3">
-                <label for="procesador" class="form-label">Procesador</label>
-                <input type="text" value="<?php echo $registro_recuperado['procesador']; ?>" class="form-control" name="procesador" id="procesador" aria-describedby="helpId" placeholder="">
-            </div>
-
-            <div class="mb-3">
-                <label for="marca" class="form-label">Marca</label>
-                <input type="text" value="<?php echo $registro_recuperado['marca']; ?>" class="form-control" name="marca" id="marca" aria-describedby="helpId" placeholder="">
-            </div>
-
-            <div class="mb-3">
-                <label for="almacenamiento" class="form-label">Almacenamiento</label>
-                <input type="text" value="<?php echo $registro_recuperado['almacenamiento']; ?>" class="form-control" name="almacenamiento" id="almacenamiento" aria-describedby="helpId" placeholder="">
-            </div>
-
-            <div class="mb-3">
-                <label for="observacion" class="form-label">Observacion</label>
-                <input type="text" value="<?php echo $registro_recuperado['observacion']; ?>" class="form-control" name="observacion" id="observacion" aria-describedby="helpId" placeholder="">
-            </div>
-
             <button type="submit" class="btn btn-success">Actualizar</button>
             <a name="" id="" class="btn btn-primary" href="index.php" role="button">Cancelar</a>
 

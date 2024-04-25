@@ -79,6 +79,12 @@ $lista_dispositivos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
         /* Ajusta la imagen al tamaño del contenedor */
         background-repeat: no-repeat;
     }
+    .required::after {
+        content: "*";
+        color: red;
+     
+        margin-left: 4px;
+    }
 </style>
 
 <br>
@@ -89,106 +95,112 @@ $lista_dispositivos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
     <div class="card-body">
 
         <form action="" method="post" enctype="multipart/form-data">
-
-            <div class="mb-3">
-                <label for="identificacion" class="form-label">Identificación</label>
-                <input type="text" class="form-control" name="identificacion" id="identificacion">
-            </div>
-
-            <div class="mb-3">
-                <label for="nombreusuario" class="form-label">Nombre</label>
-                <input type="text" class="form-control" name="nombreusuario" id="nombreusuario" readonly>
-            </div>
-
-            <div class="mb-3">
-                <label for="nombredependencia" class="form-label">Dependencia</label>
-                <input type="text" class="form-control" name="nombredependencia" id="nombredependencia" readonly>
-            </div>
-
-            <div class="mb-3">
-                <label for="dispositivo" class="form-label">Dispositivo</label>
-                <select class="form-select form-select-sm" name="dispositivo" id="dispositivo">
-                    <?php foreach ($lista_dispositivos as $registro) { ?>
-                        <option value="<?php echo $registro['id']; ?>">
-                            <?php echo $registro['nombredeldispositivo']; ?></option>
-                    <?php } ?>
-                </select>
-            </div>
-
-            <div id="info-dispositivo" class="mt-3">
-                <strong>Información del dispositivo:</strong><br>
-                <span id="cantidad-disponible"></span><br>
-                <span id="cantidad-restante"></span>
-            </div>
-
-            <br>
-
-            <script>
-                $(document).ready(function(){
-                    $('#dispositivo').select2();
-                })
-
-            </script>
-
-            <script>
-                $(document).ready(function() {
-                    $('#dispositivo').on('change', function() {
-                        var dispositivoSeleccionado = $(this).val();
-
-                        $.ajax({
-                            method: "POST",
-                            url: "../../obtener_cantidad_dispositivos.php", // Reemplaza con la ruta correcta de tu archivo PHP para obtener la cantidad
-                            data: {
-                                dispositivo: dispositivoSeleccionado
-                            },
-                            success: function(response) {
-                                var cantidadInfo = JSON.parse(response);
-                                $('#cantidad-disponible').text('Cantidad disponible: ' + cantidadInfo.cantidadDisponible);
-                                $('#cantidad-restante').text('Cantidad restante: ' + cantidadInfo.cantidadRestante);
-                            },
-                            error: function(xhr, status, error) {
-                                // Manejo de errores de la solicitud AJAX
-                            }
-                        });
-                    });
-                });
-            </script>
+            <div class="row">
 
             
+                <div class="mb-3 col-lg-6">
+                    <label for="identificacion" class="form-label required">Identificación</label>
+                    <input type="text" class="form-control" name="identificacion" id="identificacion">
+                    <span id="mensajeErrorIdentificacion" style="display: none; color: red;">Completa este campo por favor</span>
+                </div>
 
-            <div class="mb-3">
-                <label for="fechadispositivo" class="form-label">Fecha Asignación</label>
-                <input type="date" class="form-control" name="fechadispositivo" id="fechadispositivo" aria-describedby="helpId" placeholder="">
+                <div class="mb-3 col-lg-6">
+                    <label for="dispositivo" class="form-label required">Dispositivo</label>
+                    <select class="form-select" name="dispositivo" id="dispositivo">
+                        <?php foreach ($lista_dispositivos as $registro) { ?>
+                            <option value="<?php echo $registro['id']; ?>">
+                                <?php echo $registro['nombredeldispositivo']; ?></option>
+                        <?php } ?>
+                    </select>
+                    <span id="mensajeErrorDispositivo" style="display: none; color: red;">Completa este campo por favor</span>
+                </div>
+
+                <div class="mb-3 col-lg-6">
+                    <label for="nombreusuario" class="form-label required">Nombre</label>
+                    <input type="text" class="form-control" name="nombreusuario" id="nombreusuario" readonly>
+                </div>
+                
+                <div id="info-dispositivo" class="col-lg-6">
+                    <strong>Información del dispositivo:</strong><br>
+                    <span id="cantidad-disponible"></span><br>
+                    <span id="cantidad-restante"></span>
+                </div>
+
+                <div class="mb-3 col-lg-6">
+                    <label for="nombredependencia" class="form-label required">Dependencia</label>
+                    <input type="text" class="form-control" name="nombredependencia" id="nombredependencia" readonly>
+                </div>
+
+                <br>
+
+                <script>
+                    $(document).ready(function(){
+                        $('#dispositivo').select2();
+                    })
+
+                </script>
+
+                <script>
+                    $(document).ready(function() {
+                        $('#dispositivo').on('change', function() {
+                            var dispositivoSeleccionado = $(this).val();
+
+                            $.ajax({
+                                method: "POST",
+                                url: "../../obtener_cantidad_dispositivos.php", // Reemplaza con la ruta correcta de tu archivo PHP para obtener la cantidad
+                                data: {
+                                    dispositivo: dispositivoSeleccionado
+                                },
+                                success: function(response) {
+                                    var cantidadInfo = JSON.parse(response);
+                                    $('#cantidad-disponible').text('Cantidad disponible: ' + cantidadInfo.cantidadDisponible);
+                                    $('#cantidad-restante').text('Cantidad restante: ' + cantidadInfo.cantidadRestante);
+                                },
+                                error: function(xhr, status, error) {
+                                    // Manejo de errores de la solicitud AJAX
+                                }
+                            });
+                        });
+                    });
+                </script>
+
+                <div class="mb-3 col-lg-6">
+                    <label for="fechadispositivo" class="form-label required">Fecha Asignación</label>
+                    <input type="date" class="form-control" name="fechadispositivo" id="fechadispositivo" aria-describedby="helpId" placeholder="">
+                </div>
+
+                <script>
+                    // Obtener la fecha actual en el formato YYYY-MM-DD
+                    let today = new Date().toISOString().substr(0, 10);
+
+                    // Establecer la fecha actual como valor predeterminado
+                    document.getElementById("fechadispositivo").value = today;
+                </script>
+
+                <!-- <div class="mb-3">
+                    <label for="" class="form-label">Acta:</label>
+                    <input type="file" class="form-control" name="acta" id="acta" aria-describedby="helpId" placeholder="">
+                </div>
+
+                <div class="mb-3">
+                    <label for="estado" class="form-label">Estado</label>
+                    <select class="form-select form-select-sm" name="estado" id="estado">
+                        <option value="En uso">En uso</option>
+                        <option value="Sin uso">Sin uso</option>
+                    </select>
+                </div> -->
+
+                <div class="mb-3 col-lg-12">
+                    <label for="observacion" class="form-label">Observación</label>
+                    <input type="text" class="form-control" name="observacion" id="observacion" aria-describedby="helpId" placeholder="">
+                </div>
             </div>
-
-            <script>
-                // Obtener la fecha actual en el formato YYYY-MM-DD
-                let today = new Date().toISOString().substr(0, 10);
-
-                // Establecer la fecha actual como valor predeterminado
-                document.getElementById("fechadispositivo").value = today;
-            </script>
-
-            <div class="mb-3">
-                <label for="" class="form-label">Acta:</label>
-                <input type="file" class="form-control" name="acta" id="acta" aria-describedby="helpId" placeholder="">
+            <div class="text-end" >
+                <button type="submit" class="btn btn-success" onclick="return ConfirmDispositivo()" >Agregar Registro</button>
+                <a name="" id="" class="btn btn-primary" href="index.php" role="button">Cancelar</a>
             </div>
-
-            <div class="mb-3">
-                <label for="estado" class="form-label">Estado</label>
-                <select class="form-select form-select-sm" name="estado" id="estado">
-                    <option value="En uso">En uso</option>
-                    <option value="Sin uso">Sin uso</option>
-                </select>
-            </div>
-
-            <div class="mb-3">
-                <label for="observacion" class="form-label">Observación</label>
-                <input type="text" class="form-control" name="observacion" id="observacion" aria-describedby="helpId" placeholder="">
-            </div>
-
-            <button type="submit" class="btn btn-success" onclick="return ConfirmDispositivo()" >Agregar Registro</button>
-            <a name="" id="" class="btn btn-primary" href="index.php" role="button">Cancelar</a>
+            
+          
 
         </form>
 

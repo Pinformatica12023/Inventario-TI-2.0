@@ -91,7 +91,7 @@ $lista_prestamoequipo = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
 <style>
     body {
-        background-image: url("../../img/Chispa_multimarca.jpg");
+        background-image: url("../../img/FLA13.jpg");
         background-size: cover;
         /* Ajusta la imagen al tamaño del contenedor */
         background-repeat: no-repeat;
@@ -148,169 +148,179 @@ $lista_prestamoequipo = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
 
 <br />
-<h1 class="text-center fw-bold">Préstamo equipos</h1>
-<div class="col-lg-12 col-12" style="width: 1500px;">
-<div class="card card-transparent">
-    <div class="card-header">
-        <a name="" id="" class="btn btn-primary" href="crear.php" role="button">Agregar Prestamo</a>
-        <a href="../../exportarprestamoequipo.php" class="btn btn-success">Exportar a Excel</a>
-    </div>
-   
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered" id="tabla_id" >
-                    <thead>
-                        <tr>
-                            <!-- <th scope="col">Acciones</th> -->
-                            <th scope="col">Actas</th>
-                            <th scope="col" class="hidden-column">Id</th>
-                            <th scope="col">Acta</th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Dependencia</th>
-                            <th scope="col">Equipo</th>
-                            <th scope="col">Estado</th>
-                           
-                    </thead>
-                    <tbody>
-                        <?php
-                        if ($lista_prestamoequipo !== null && is_array($lista_prestamoequipo)) {
-                            foreach ($lista_prestamoequipo as $registro) {
-                        ?>
-                        <div class="modal fade" id="info<?php echo $registro["id"] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Detalles Préstamo equipo <?php echo $registro["modelo"] ?></h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <label for="" class="form-label fs-5 ">Identificación Usuario</label>
-                                            <input type="text" class="form-control" readonly value="<?php if($registro['identificacion']=="" || $registro["identificacion"]==null){
-                                                echo "No hay usuario registrado en este préstamo";
-                                            }else{
-                                                echo $registro['identificacion'];
-                                            }?>">
-                                        
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="" class="form-label fs-5 ">Nombre Usuario</label>
-                                            <input type="text" class="form-control" readonly value="<?php if($registro['nombre']=="" || $registro["nombre"]==null){
-                                                echo "No hay usuario registrado en este préstamo";
-                                            }else{
-                                                echo $registro['nombre'];
-                                            }?>">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="" class="form-label fs-5 ">Dependencia</label>
-                                            <input type="text" class="form-control" readonly value="<?php if($registro['dependencia']=="" || $registro["dependencia"]==null){
-                                                echo "No hay dependencia Registrada en este préstamo";
-                                            }else{
-                                                echo $registro['dependencia'];
-                                            }?>">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="" class="form-label fs-5 ">Equipo</label>
-                                            <input type="text" class="form-control" readonly value="<?php
-                                                $nombreModelo = $registro['modelo'];
-                                                $sentenciaModelo = $conexion->prepare("SELECT numeropc FROM equipos WHERE numeropc=:nombre");
-                                                $sentenciaModelo->bindParam(":nombre", $nombreModelo);
-                                                $sentenciaModelo->execute();
-                                                $equipo = $sentenciaModelo->fetch(PDO::FETCH_ASSOC);
-                                                echo ($equipo) ? $equipo['numeropc'] : 'No disponible';
-                                                ?>">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="" class="form-label fs-5 ">Serial PC</label>
-                                            <input type="text" class="form-control" readonly value="<?php if($registro['serialpc']=="" || $registro["serialpc"]==null){
-                                                echo "No hay serial registrado en este préstamo";
-                                            }else{
-                                                echo $registro['serialpc'];
-                                            }?>">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="" class="form-label fs-5 ">Marca</label>
-                                            <input type="text" class="form-control" readonly value="<?php if($registro['marca']=="" || $registro["marca"]==null){
-                                                echo "No hay marca registrada en este préstamo";
-                                            }else{
-                                                echo $registro['marca'];
-                                            }?>">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="" class="form-label fs-5 ">Fecha asignación</label>
-                                            <input type="date" class="form-control" readonly value=<?php if($registro['fechaequipo']=="" || $registro["fechaequipo"]==null){
-                                                echo "No hay fecha de asignación registrada en este prestamo";
-                                            }else{
-                                                echo $registro['fechaequipo'];
-                                            }?>>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="" class="form-label fs-5 ">Estado</label>
-                                            <input type="text" class="form-control" readonly value="<?php if($registro['EstadoPrestamo']=="" || $registro["EstadoPrestamo"]==null){
-                                                echo "No hay estado registrado en este préstamo";
-                                            }else{
-                                                echo $registro['EstadoPrestamo'];
-                                            }?>">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="" class="form-label fs-5 ">observación</label>
-                                            <input type="text" class="form-control" readonly value="<?php if($registro['observacion']=="" || $registro["observacion"]==null){
-                                                echo "No hay observaciones registradas en este préstamo";
-                                            }else{
-                                                echo $registro['observacion'];
-                                            }?>">
-                                        </div>
 
-                                    <div class="modal-footer">
-                                        
-                                        <a class="btn btn-info" href="editar.php?txtID=<?php echo $registro['id']; ?>" role="button">Editar</a>
-                                        <a class="btn btn-success" href="javascript:finalizarPrestamo(<?php echo $registro['id']; ?>);" role="button">Finalizar</a>
-                                        <a class="btn btn-danger" href="javascript:borrar(<?php echo $registro['id']; ?>);" role="button">Eliminar</a>
+<h1 class="text-center text-light fw-bold">Préstamo equipos</h1>
+
+
+
+    <div class="card card-transparent" >
+        <div class="card-header">
+            <a name="" id="" class="btn btn-primary" href="crear.php" role="button">Agregar Prestamo</a>
+            <a href="../../exportarprestamoequipo.php" class="btn btn-success">Exportar a Excel</a>
+        </div>
+    
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="tabla_id" >
+                        <thead>
+                            <tr>
+                                <!-- <th scope="col">Acciones</th> -->
+                                <th scope="col">Actas</th>
+                                <th scope="col" class="hidden-column">Id</th>
+                                <th scope="col">Acta</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Equipo</th>
+                                <th scope="col">Dependencia</th>
+                               
+                                <th scope="col">Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            if ($lista_prestamoequipo !== null && is_array($lista_prestamoequipo)) {
+                                foreach ($lista_prestamoequipo as $registro) {
+                            ?>
+                            <div class="modal fade" id="info<?php echo $registro["id"] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Detalles Préstamo equipo <?php echo $registro["modelo"] ?></h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="form-group col-lg-6">
+                                                    <label for="" class="form-label fs-5 ">Identificación Usuario</label>
+                                                    <input type="text" class="form-control" readonly value="<?php if($registro['identificacion']=="" || $registro["identificacion"]==null){
+                                                        echo "No hay usuario registrado en este préstamo";
+                                                    }else{
+                                                        echo $registro['identificacion'];
+                                                    }?>">
+                                                
+                                                </div>
+
+                                                <div class="form-group col-lg-6">
+                                                    <label for="" class="form-label fs-5 ">Equipo</label>
+                                                    <input type="text" class="form-control" readonly value="<?php
+                                                        $nombreModelo = $registro['modelo'];
+                                                        $sentenciaModelo = $conexion->prepare("SELECT numeropc FROM equipos WHERE numeropc=:nombre");
+                                                        $sentenciaModelo->bindParam(":nombre", $nombreModelo);
+                                                        $sentenciaModelo->execute();
+                                                        $equipo = $sentenciaModelo->fetch(PDO::FETCH_ASSOC);
+                                                        echo ($equipo) ? $equipo['numeropc'] : 'No disponible';
+                                                        ?>">
+                                                </div>
+
+                                                <div class="form-group col-lg-6">
+                                                    <label for="" class="form-label fs-5 ">Nombre Usuario</label>
+                                                    <input type="text" class="form-control" readonly value="<?php if($registro['nombre']=="" || $registro["nombre"]==null){
+                                                        echo "No hay usuario registrado en este préstamo";
+                                                    }else{
+                                                        echo $registro['nombre'];
+                                                    }?>">
+                                                </div>
+
+                                                <div class="form-group col-lg-6">
+                                                    <label for="" class="form-label fs-5 ">Serial PC</label>
+                                                    <input type="text" class="form-control" readonly value="<?php if($registro['serialpc']=="" || $registro["serialpc"]==null){
+                                                        echo "No hay serial registrado en este préstamo";
+                                                    }else{
+                                                        echo $registro['serialpc'];
+                                                    }?>">
+                                                </div>
+                                                <div class="form-group col-lg-6">
+                                                    <label for="" class="form-label fs-5 ">Dependencia</label>
+                                                    <input type="text" class="form-control" readonly value="<?php if($registro['dependencia']=="" || $registro["dependencia"]==null){
+                                                        echo "No hay dependencia Registrada en este préstamo";
+                                                    }else{
+                                                        echo $registro['dependencia'];
+                                                    }?>">
+                                                </div>
+                                                                                  
+                                                <div class="form-group col-lg-6">
+                                                    <label for="" class="form-label fs-5 ">Marca</label>
+                                                    <input type="text" class="form-control" readonly value="<?php if($registro['marca']=="" || $registro["marca"]==null){
+                                                        echo "No hay marca registrada en este préstamo";
+                                                    }else{
+                                                        echo $registro['marca'];
+                                                    }?>">
+                                                </div>
+                                                <div class="form-group col-lg-6">
+                                                    <label for="" class="form-label fs-5 ">Fecha asignación</label>
+                                                    <input type="date" class="form-control" readonly value=<?php if($registro['fechaequipo']=="" || $registro["fechaequipo"]==null){
+                                                        echo "No hay fecha de asignación registrada en este prestamo";
+                                                    }else{
+                                                        echo $registro['fechaequipo'];
+                                                    }?>>
+                                                </div>
+                                                <div class="form-group col-lg-6">
+                                                    <label for="" class="form-label fs-5 ">Estado</label>
+                                                    <input type="text" class="form-control <?php echo $registro['EstadoPrestamo'] == 'EN_CURSO' ? 'text-success' : 'text-danger'; ?>" readonly value="<?php if($registro['EstadoPrestamo']=="" || $registro["EstadoPrestamo"]==null){
+                                                        echo "No hay estado registrado en este préstamo";
+                                                    }else{
+                                                        echo $registro['EstadoPrestamo'];
+                                                    }?>">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="" class="form-label fs-5 ">observación</label>
+                                                    <input type="text" class="form-control" readonly value="<?php if($registro['observacion']=="" || $registro["observacion"]==null){
+                                                        echo "No hay observaciones registradas en este préstamo";
+                                                    }else{
+                                                        echo $registro['observacion'];
+                                                    }?>">
+                                                </div>
+                                            </div>
+
+                                        <div class="modal-footer">
+                                            
+                                            <a class="btn btn-info" href="editar.php?txtID=<?php echo $registro['id']; ?>" role="button">Editar</a>
+                                            <a class="btn btn-success" href="javascript:finalizarPrestamo(<?php echo $registro['id']; ?>);" role="button">Finalizar</a>
+                                            <a class="btn btn-danger" href="javascript:borrar(<?php echo $registro['id']; ?>);" role="button">Eliminar</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <tr  id="<?php echo $registro["id"] ?>" data-prestamo-id = "<?php echo $registro["id"] ?>">
-                           
-                            <td>
-                                <a class="btn btn-dark" href="../../acta_entrega_devolucion/actaentregaequipo.php?txtID=<?php echo $registro['id']; ?>" role="button" target="_blank">Entrega</a>
-                                |<a class="btn btn-warning" href="../../acta_entrega_devolucion/actadevolucionequipo.php?txtID=<?php echo $registro['id']; ?>" role="button" target="_blank">Devolución</a>
-                            </td>
-                            <td scope="row" class="hidden-column"><?php echo $registro['id']; ?></td>
-                            <td>
-                                <?php if (!empty($registro['acta'])) : ?>
-                                    <a href="../../secciones/actas/<?php echo $registro['acta']; ?>"><?php echo $registro['acta']; ?></a>
-                                <?php else : ?>
-                                    <span style="color: red; font-weight: bold;">No hay actas disponibles</span>
-                                <?php endif; ?>
-                            </td>
-                            <td><?php echo $registro['nombre']; ?></td>
-                            <td><?php echo $registro['dependencia']; ?></td>
-                            <td>
-                                <?php
-                                $nombreModelo = $registro['modelo'];
-                                $sentenciaModelo = $conexion->prepare("SELECT numeropc FROM equipos WHERE numeropc=:nombre");
-                                $sentenciaModelo->bindParam(":nombre", $nombreModelo);
-                                $sentenciaModelo->execute();
-                                $equipo = $sentenciaModelo->fetch(PDO::FETCH_ASSOC);
-                                echo ($equipo) ? $equipo['numeropc'] : 'No disponible';
-                                ?>
-                            </td>
-                            <td class="<?php echo $registro['EstadoPrestamo'] == 'EN_CURSO' ? 'text-success' : 'text-danger'; ?>"><?php echo $registro['EstadoPrestamo']; ?></td>
+                            <tr  id="<?php echo $registro["id"] ?>" >
                             
-                        </tr>
-                        <?php
+                                <td>
+                                    <a class="btn btn-dark" href="../../acta_entrega_devolucion/actaentregaequipo.php?txtID=<?php echo $registro['id']; ?>" role="button" target="_blank">Entrega</a>
+                                    |<a class="btn btn-warning" href="../../acta_entrega_devolucion/actadevolucionequipo.php?txtID=<?php echo $registro['id']; ?>" role="button" target="_blank">Devolución</a>
+                                </td>
+                                <td scope="row" class="hidden-column"><?php echo $registro['id']; ?></td>
+                                <td>
+                                    <?php if (!empty($registro['acta'])) : ?>
+                                        <a href="../../secciones/actas/<?php echo $registro['acta']; ?>"><?php echo $registro['acta']; ?></a>
+                                    <?php else : ?>
+                                        <span style="color: red; font-weight: bold;">No hay actas disponibles</span>
+                                    <?php endif; ?>
+                                </td>
+                                <td><?php echo $registro['nombre']; ?></td>
+                                <td>
+                                    <?php
+                                    $nombreModelo = $registro['modelo'];
+                                    $sentenciaModelo = $conexion->prepare("SELECT numeropc FROM equipos WHERE numeropc=:nombre");
+                                    $sentenciaModelo->bindParam(":nombre", $nombreModelo);
+                                    $sentenciaModelo->execute();
+                                    $equipo = $sentenciaModelo->fetch(PDO::FETCH_ASSOC);
+                                    echo ($equipo) ? $equipo['numeropc'] : 'No disponible';
+                                    ?>
+                                </td>
+                                <td><?php echo $registro['dependencia']; ?></td>
+                                <td class="<?php echo $registro['EstadoPrestamo'] == 'EN_CURSO' ? 'text-success' : 'text-danger'; ?>"><?php echo $registro['EstadoPrestamo']; ?></td>
+                                
+                            </tr>
+                            <?php
+                                }
+                            } else {
+                                echo "<tr><td colspan='15'>No hay datos disponibles.</td></tr>";
                             }
-                        } else {
-                            echo "<tr><td colspan='15'>No hay datos disponibles.</td></tr>";
-                        }
-                        ?>
-                    </tbody>
-                </table>
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
     </div>
-</div>
+
 
 <script>
     // Función para mostrar el modal cuando se hace clic en el registro

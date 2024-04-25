@@ -20,15 +20,15 @@ if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] !== true) {
 }
 ?>
 
-<div class="p-5 mb-4 bg-transparent-gray rounded-3">
-    <div class="container-fluid py-5">
-        <h1 class="display-5 fw-bold">Bienvenid@ al sistema</h1>
-        <p class="col-md-8 fs-4">Usuario: <?php echo $_SESSION['usuario']; ?></p>
+<div class="mb-4 ">
+    <div class="container-fluid ">
+        <h1 class=" fw-bold">Bienvenido al sistema</h1>
+        <!-- <p class="col-md-8 fs-4">Usuario: <?php echo $_SESSION['usuario']; ?></p>
         <p class="col-md-8 fs-4">Sistema de inventario de equipos TI</p>
         <p class="col-md-8 fs-4">Área De Informática</p>
             <a href="secciones/prestamoequipos/index.php">
                 <button class="btn btn-primary btn-lg" type="button">Continuar</button>
-            </a>
+            </a> -->
     </div>
 </div>
 

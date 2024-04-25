@@ -70,78 +70,81 @@ if ($_POST) {
     <div class="card-body">
 
         <form action="" method="post" id="formularioCrearEquipo" enctype="multipart/form-data">
+            <div class="row">
 
-            <div class="mb-3">
-                <label for="numeropc" class="form-label required">Equipo</label>
-                <input type="text" class="form-control" name="numeropc" id="numeropc" aria-describedby="helpId" placeholder="">
-                <span id="mensajeErrorNumeropc" style="display: none; color: red;">Completa este campo por favor</span>
-            </div>
 
-            <div class="mb-3">
-                <label for="serialpc" class="form-label required">Serial PC</label>
-                <input type="text" class="form-control" name="serialpc" id="serialpc" aria-describedby="helpId" placeholder="">
-                <span id="mensajeErrorSerialpc" style="display: none; color: red;">Completa este campo por favor</span>
-            </div>
+                <div class="mb-3 col-lg-6">
+                    <label for="numeropc" class="form-label required">Equipo</label>
+                    <input type="text" class="form-control" name="numeropc" id="numeropc" aria-describedby="helpId" placeholder="">
+                    <span id="mensajeErrorNumeropc" style="display: none; color: red;">Completa este campo por favor</span>
+                </div>
 
-            <div class="mb-3">
-                <label for="serialcargador" class="form-label">Serial Cargador</label>
-                <input type="text" class="form-control" name="serialcargador" id="serialcargador" readonly>
-            </div>
+                <div class="mb-3 col-lg-6">
+                    <label for="serialpc" class="form-label required">Serial PC</label>
+                    <input type="text" class="form-control" name="serialpc" id="serialpc" aria-describedby="helpId" placeholder="">
+                    <span id="mensajeErrorSerialpc" style="display: none; color: red;">Completa este campo por favor</span>
+                </div>
 
-            <div class="mb-3">
-                <label for="placa" class="form-label required">Placa</label>
-                <input type="text" class="form-control" name="placa" id="placa" aria-describedby="helpId" placeholder="">
-                <span id="mensajeErrorPlacapc" style="display: none; color: red;">Completa este campo por favor</span>
-            </div>
+                <div class="mb-3 col-lg-6">
+                    <label for="serialcargador" class="form-label">Serial Cargador</label>
+                    <input type="text" class="form-control" name="serialcargador" id="serialcargador" readonly>
+                </div>
 
-            <div class="mb-3">
-                <label for="activo" class="form-label">Activo</label>
-                <input type="text" class="form-control" name="activo" id="activo" aria-describedby="helpId" placeholder="">
-            </div>
+                <div class="mb-3 col-lg-6">
+                    <label for="placa" class="form-label required">Placa</label>
+                    <input type="text" class="form-control" name="placa" id="placa" aria-describedby="helpId" placeholder="">
+                    <span id="mensajeErrorPlacapc" style="display: none; color: red;">Completa este campo por favor</span>
+                </div>
 
-            <div class="mb-3">
-                <label for="fechacompra" class="form-label ">Fecha De Compra</label>
-                <input type="date" class="form-control" name="fechacompra" id="fechacompra" aria-describedby="helpId" placeholder="">
-                <span id="mensajeErrorFecha" style="display: none; color: red;">La fecha de compra no puede ser futura</span>
-            </div>
+                <div class="mb-3 col-lg-6">
+                    <label for="activo" class="form-label">Proveedor</label>
+                    <input type="text" class="form-control" name="activo" id="activo" aria-describedby="helpId" placeholder="">
+                </div>
 
-            <div class="mb-3">
-                <label for="tipo" class="form-label required">Tipo</label>
-                <select class="form-select form-select-sm" name="tipo" id="tipo">
-                    <option selected>Seleccione uno</option>
-                    <option value="PORTATIL">PORTATIL</option>
-                    <option value="ESCRITORIO">ESCRITORIO</option>
-                </select>
-                <span id="mensajeErrorTipopc" style="display: none; color: red;">Debes seleccionar un tipo</span>
-            </div>
+                <div class="mb-3 col-lg-6">
+                    <label for="fechacompra" class="form-label ">Fecha De Compra</label>
+                    <input type="date" class="form-control" name="fechacompra" id="fechacompra" aria-describedby="helpId" placeholder="">
+                    <span id="mensajeErrorFecha" style="display: none; color: red;">La fecha de compra no puede ser futura</span>
+                </div>
 
-            <div class="mb-3">
-                <label for="ram" class="form-label required">RAM</label>
-                <input type="text" class="form-control" name="ram" id="ram" aria-describedby="helpId" placeholder="">
-                <span id="mensajeErrorRampc" style="display: none; color: red;">Completa este campo por favor</span>
-            </div>
+                <div class="mb-3 col-lg-6">
+                    <label for="tipo" class="form-label required">Tipo</label>
+                    <select class="form-select form-select-sm" name="tipo" id="tipo">
+                        <option selected>Seleccione uno</option>
+                        <option value="PORTATIL">PORTATIL</option>
+                        <option value="ESCRITORIO">ESCRITORIO</option>
+                    </select>
+                    <span id="mensajeErrorTipopc" style="display: none; color: red;">Debes seleccionar un tipo</span>
+                </div>
 
-            <div class="mb-3">
-                <label for="procesador" class="form-label required">Procesador</label>
-                <input type="text" class="form-control" name="procesador" id="procesador" aria-describedby="helpId" placeholder="">
-                <span id="mensajeErrorProcesadorpc" style="display: none; color: red;">Completa este campo por favor</span>
-            </div>
+                <div class="mb-3 col-lg-6">
+                    <label for="ram" class="form-label required">RAM</label>
+                    <input type="text" class="form-control" name="ram" id="ram" aria-describedby="helpId" placeholder="">
+                    <span id="mensajeErrorRampc" style="display: none; color: red;">Completa este campo por favor</span>
+                </div>
 
-            <div class="mb-3">
-                <label for="marca" class="form-label required">Marca</label>
-                <input type="text" class="form-control" name="marca" id="marca" aria-describedby="helpId" placeholder="">
-                <span id="mensajeErrorMarcapc" style="display: none; color: red;">Completa este campo por favor</span>
-            </div>
+                <div class="mb-3 col-lg-6">
+                    <label for="procesador" class="form-label required">Procesador</label>
+                    <input type="text" class="form-control" name="procesador" id="procesador" aria-describedby="helpId" placeholder="">
+                    <span id="mensajeErrorProcesadorpc" style="display: none; color: red;">Completa este campo por favor</span>
+                </div>
 
-            <div class="mb-3">
-                <label for="almacenamiento" class="form-label required">Almacenamiento</label>
-                <input type="text" class="form-control" name="almacenamiento" id="almacenamiento" aria-describedby="helpId" placeholder="">
-                <span id="mensajeErrorAlmacenamientopc" style="display: none; color: red;">Completa este campo por favor</span>
-            </div>
+                <div class="mb-3 col-lg-6">
+                    <label for="marca" class="form-label required">Marca</label>
+                    <input type="text" class="form-control" name="marca" id="marca" aria-describedby="helpId" placeholder="">
+                    <span id="mensajeErrorMarcapc" style="display: none; color: red;">Completa este campo por favor</span>
+                </div>
 
-            <div class="mb-3">
-                <label for="observacion" class="form-label">Observacion</label>
-                <input type="text" class="form-control" name="observacion" id="observacion" aria-describedby="helpId" placeholder="">
+                <div class="mb-3 col-lg-6">
+                    <label for="almacenamiento" class="form-label required">Almacenamiento</label>
+                    <input type="text" class="form-control" name="almacenamiento" id="almacenamiento" aria-describedby="helpId" placeholder="">
+                    <span id="mensajeErrorAlmacenamientopc" style="display: none; color: red;">Completa este campo por favor</span>
+                </div>
+
+                <div class="mb-3 col-lg-6">
+                    <label for="observacion" class="form-label">Observacion</label>
+                    <input type="text" class="form-control" name="observacion" id="observacion" aria-describedby="helpId" placeholder="">
+                </div>
             </div>
 
             <button type="submit" class="btn btn-success">Agregar Registro</button>
