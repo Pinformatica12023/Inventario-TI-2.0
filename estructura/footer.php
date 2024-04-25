@@ -68,9 +68,9 @@ $sentencia->execute();
 <script>
     $(document).ready(function() {
         $("#tabla_id").DataTable({
-            // "order": [
-            //     [0, 'desc']
-            // ], // Ordena la primera columna (ID) de manera descendente
+            "order": [
+                [0, 'desc']
+            ], // Ordena la primera columna (ID) de manera descendente
            
             "pageLength": 15,
             "lengthMenu": [
