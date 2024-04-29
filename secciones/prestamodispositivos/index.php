@@ -238,7 +238,7 @@ $lista_prestamodispositivo = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                                 
                                 <td>
                                     <a class="btn btn-dark" href="../../acta_entrega_devolucion/actaentregadispositivo.php?txtID=<?php echo $registro['id']; ?>" role="button" target="_blank">Entrega</a>
-                                    |<a class="btn btn-warning" href="../../acta_entrega_devolucion/actadevoluciondispositivo.php?txtID=<?php echo $registro['id']; ?>" role="button" target="_blank">Devolución</a>
+                                    <a class="btn btn-warning" href="../../acta_entrega_devolucion/actadevoluciondispositivo.php?txtID=<?php echo $registro['id']; ?>" role="button" target="_blank">Devolución</a>
                                 </td>
                                 <td>
                                     <?php if (!empty($registro['acta'])) : ?>

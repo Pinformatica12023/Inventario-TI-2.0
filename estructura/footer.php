@@ -82,6 +82,22 @@ $sentencia->execute();
             }
         });
     });
+    $(document).ready(function() {
+        $("#docks").DataTable({
+            "order": [
+                [0, 'desc']
+            ], // Ordena la primera columna (ID) de manera descendente
+           
+            "pageLength": 15,
+            "lengthMenu": [
+                [15, 30, 50],
+                [15, 30, 50]
+            ],
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.13.1/i18n/es-ES.json"
+            }
+        });
+    });
 </script>
 
 <script>

@@ -53,17 +53,19 @@ if (!isset($_SESSION['usuario'])) {
     
 
     <style>
-        body {
+        /* body {
             background-image: url('img/FLA15.jpg'); 
             background-size: cover;
             background-repeat: no-repeat;
-        }
+        } */
+        
 
         .nav-link.active {
             background-color: #9de0ad; /* Cambia el color de fondo */
             color: white; /* Cambia el color del texto */
             
         }
+
     </style>
    
 
@@ -71,6 +73,7 @@ if (!isset($_SESSION['usuario'])) {
 </head>
 
 <body>
+   
 
     <header>
         <!-- place navbar here -->
@@ -106,6 +109,7 @@ if (!isset($_SESSION['usuario'])) {
             </ul>
         </nav>
         <main class="container-fluid p-4 ">
+     
 <?php if (isset($_GET['mensaje'])) { ?>
     <script>
         Swal.fire({icon: "success",title: "<?php echo $_GET['mensaje']; ?>"});

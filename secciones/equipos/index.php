@@ -51,7 +51,7 @@ $lista_equipos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
 <style>
     body {
-        background-image: url("../../img/FLA16.jpg");
+        background-image: url("../../img/FLA13.jpg");
         background-size: cover;
         /* Ajusta la imagen al tamaño del contenedor */
         background-repeat: no-repeat;
@@ -146,6 +146,7 @@ $lista_equipos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                                     </div>
                                     <div class="modal-body  card-transparent">
                                         <div class="row">
+ 
                                             <div class="form-group col-lg-4">
                                                 <label for="" class="form-label fs-5 ">Serial cargador</label>
                                                 <input type="text" class="form-control" readonly value="<?php if($registro['serialcargador']=="" || $registro["serialcargador"]==null){
@@ -202,8 +203,9 @@ $lista_equipos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                                             </div>
                                         </div>  
                                     </div>
+
                                     <div class="modal-footer">
-                                    <a class="btn btn-info" href="editar.php?txtID=<?php echo $registro['id']; ?>" role="button">Editar</a>
+                                    <a class="btn btn-info text-light" href="editar.php?txtID=<?php echo $registro['id']; ?>" role="button">Editar</a>
                                     <a class="btn btn-danger" href="javascript:borrar(<?php echo $registro['id']; ?>);" role="button">Eliminar</a>
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                                         

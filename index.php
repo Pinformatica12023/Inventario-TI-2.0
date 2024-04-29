@@ -1,14 +1,26 @@
-<style>
-    .bg-transparent-gray {
-        background-color: rgba(169, 169, 169, 0.7);
-    }
-</style>
-
-<link rel="icon" href="./img/logoFLA.png" type="image/png">
 
 
 <?php include("estructura/header.php"); ?>
+
+<style>
+        #video-background {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        z-index: -1;
+    }
+</style>
+<!-- <link rel="icon" href="img/video/video1.mp4" type="image/png"> -->
+<video autoplay muted loop id="video-background">
+    <source src="img/video/video1.mp4" type="video/mp4">
+</video>
+
 <br>
+
 
 <?php
 
@@ -20,16 +32,6 @@ if (!isset($_SESSION['logueado']) || $_SESSION['logueado'] !== true) {
 }
 ?>
 
-<div class="mb-4 ">
-    <div class="container-fluid ">
-        <h1 class=" fw-bold">Bienvenido al sistema</h1>
-        <!-- <p class="col-md-8 fs-4">Usuario: <?php echo $_SESSION['usuario']; ?></p>
-        <p class="col-md-8 fs-4">Sistema de inventario de equipos TI</p>
-        <p class="col-md-8 fs-4">Área De Informática</p>
-            <a href="secciones/prestamoequipos/index.php">
-                <button class="btn btn-primary btn-lg" type="button">Continuar</button>
-            </a> -->
-    </div>
-</div>
+<!--  -->
 
 <?php include("estructura/footer.php"); ?>
