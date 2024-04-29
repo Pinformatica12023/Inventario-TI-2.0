@@ -5,7 +5,7 @@ include "bd.php";
 try {
     // Obtener los datos de la base de datos con la información del nombre del dispositivo
     $sentencia = $conexion->prepare("SELECT p.identificacion, p.nombreusuario, p.nombredependencia, d.nombredeldispositivo AS dispositivo,
-    p.fechadispositivo, p.estado, p.observacion FROM prestamodispositivo p
+    p.fechadispositivo, p.Estado_Prestamo, p.observacion FROM prestamodispositivo p
     INNER JOIN dispositivos d ON p.dispositivo = d.id");
     $sentencia->execute();
     $datos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
@@ -42,7 +42,7 @@ try {
             $registro['nombredependencia'],
             $registro['dispositivo'], // Ahora se muestra el nombre del dispositivo
             $registro['fechadispositivo'],
-            $registro['estado'],
+            $registro['Estado_Prestamo'],
             $registro['observacion'],
         );
         fputcsv($csvFile, $fila, $delimiter);

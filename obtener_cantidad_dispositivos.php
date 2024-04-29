@@ -10,7 +10,7 @@ if ($_POST && isset($_POST['dispositivo'])) {
     $resultCantidad = $stmtCantidad->fetch(PDO::FETCH_ASSOC);
     $cantidadDisponible = $resultCantidad['cantidad'];
 
-    $stmtPrestados = $conexion->prepare("SELECT COUNT(*) AS cantidad_prestada FROM prestamodispositivo WHERE dispositivo = :dispositivo AND estado = 'Prestado'");
+    $stmtPrestados = $conexion->prepare("SELECT COUNT(*) AS cantidad_prestada FROM prestamodispositivo WHERE dispositivo = :dispositivo AND Estado_prestamo = 'EN_CURSO'");
     $stmtPrestados->bindParam(":dispositivo", $dispositivoId);
     $stmtPrestados->execute();
     $resultPrestados = $stmtPrestados->fetch(PDO::FETCH_ASSOC);

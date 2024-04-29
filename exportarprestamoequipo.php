@@ -5,7 +5,7 @@ include "bd.php";
 try {
     // Obtener los datos de la base de datos para equipos cuyo modelo comience con '2023'
     $sentencia = $conexion->prepare("SELECT identificacion, nombre, dependencia, modelo, serialpc, marca, 
-    fechaequipo, estado, observacion FROM prestamoequipo WHERE modelo LIKE '2023%' or LIKE '2022%' ");
+    fechaequipo, EstadoPrestamo, observacion FROM prestamoequipo WHERE modelo LIKE '2023%' or LIKE '2022%' ");
     
     $sentencia->execute();
     $datos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
@@ -46,7 +46,7 @@ try {
             $registro['serialpc'],
             $registro['marca'],
             $registro['fechaequipo'],
-            $registro['estado'],
+            $registro['EstadoPrestamo'],
             $registro['observacion'],
         );
         fputcsv($csvFile, $fila, $delimiter);

@@ -25,7 +25,7 @@ if (isset($_GET['txtID'])) {
         $dispositivo = $registro_recuperado["dispositivo"];
         $fechadispositivo = $registro_recuperado["fechadispositivo"];
         $acta = $registro_recuperado["acta"];
-        $estado = $registro_recuperado["estado"];
+        $estado = $registro_recuperado["Estado_Prestamo"];
         $observacion = $registro_recuperado["observacion"];
     }
 }

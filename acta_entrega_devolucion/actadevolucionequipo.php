@@ -28,7 +28,7 @@ if (isset($_GET['txtID'])) {
         $marca = $registro_recuperado["marca"];
         $fechaequipo = $registro_recuperado["fechaequipo"];
         $acta = $registro_recuperado["acta"];
-        $estado = $registro_recuperado["estado"];
+        $estado = $registro_recuperado["EstadoPrestamo"];
         $observacion = $registro_recuperado["observacion"];
 
         // Obtener los campos de equipos
