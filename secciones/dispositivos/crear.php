@@ -26,14 +26,18 @@ if ($_POST) {
 
 <style>
     body {
-        background-image: url("../../img/FLA9.jpg");
+        background-image: url("../../img/FLA13.jpg");
         background-size: cover; /* Ajusta la imagen al tamaño del contenedor */
         background-repeat: no-repeat;
+    }
+    .card-transparent {
+        background-color: rgba(255, 255, 255, 0.9);
+        /* Cambia los valores RGB y el valor alfa (0.7) según tus preferencias */
     }
 </style>
 
 <br>
-<div class="card">
+<div class="card card-transparent">
     <div class="card-header">
         Dispositivos
     </div>
@@ -41,16 +45,21 @@ if ($_POST) {
 
         <form action="" method="post" enctype="multipart/form-data">
 
-            <div class="mb-3">
-                <label for="nombredeldispositivo" class="form-label">Dispositivo</label>
-                <input type="text" class="form-control" name="nombredeldispositivo" id="nombredeldispositivo" aria-describedby="helpId" placeholder="">
-            </div>
+            <div class="row">
 
-            <div class="mb-3">
-                <label for="cantidad" class="form-label">Cantidad</label>
-                <input type="text" class="form-control" name="cantidad" id="cantidad" aria-describedby="helpId" placeholder="">
-                <span id="mensajeError" style="display: none; color: red;">Solo se permiten números</span>
+                <div class="mb-3 col-lg-6">
+                    <label for="nombredeldispositivo" class="form-label">Dispositivo</label>
+                    <input type="text" class="form-control" name="nombredeldispositivo" id="nombredeldispositivo" aria-describedby="helpId" placeholder="">
+                </div>
+
+                <div class="mb-3 col-lg-6">
+                    <label for="cantidad" class="form-label">Cantidad</label>
+                    <input type="text" class="form-control" name="cantidad" id="cantidad" aria-describedby="helpId" placeholder="">
+                    <span id="mensajeError" style="display: none; color: red;">Solo se permiten números</span>
+                </div>
+
             </div>
+           
 
             <button type="submit" class="btn btn-success">Agregar Registro</button>
             <a name="" id="" class="btn btn-primary" href="index.php" role="button">Cancelar</a>

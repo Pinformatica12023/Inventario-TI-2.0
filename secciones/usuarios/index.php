@@ -27,7 +27,7 @@ $lista_usuarios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
 <style>
     body {
-        background-image: url("../../img/Chispa_multimarca.jpg");
+        background-image: url("../../img/FLA13.jpg");
         background-size: cover;
         /* Ajusta la imagen al tamaño del contenedor */
         background-repeat: no-repeat;
@@ -53,12 +53,12 @@ $lista_usuarios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
     #tabla_id th,
     #tabla_id td {
         white-space: nowrap;
-        font-size: 10px;
+        font-size: 15px;
         /* Reducir aún más el tamaño de la fuente */
     }
 
     #tabla_id .btn {
-        font-size: 10px;
+        font-size: 15px;
         /* Reducir el tamaño de la fuente de los botones */
         padding: 3px 8px;
         /* Ajustar el relleno para adaptarse al nuevo tamaño */
@@ -81,7 +81,7 @@ $lista_usuarios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
 
 <br />
-<h1 class="fw-bold text-center">Usuarios</h1>
+<h1 class="fw-bold text-center text-light">Usuarios</h1>
 <div class="card card-transparent">
     <div class="card-header">
         <a name="" id="" class="btn btn-primary" href="crear.php" role="button">Agregar Usuario</a>
@@ -112,7 +112,7 @@ $lista_usuarios = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                                 <td><?php echo $registro['dependencia']; ?></td>
                                 <td>
                                     <a class="btn btn-info" href="editar.php?txtID=<?php echo $registro['id']; ?>" role="button">Editar</a>
-                                    |<a class="btn btn-danger" href="javascript:borrar(<?php echo $registro['id']; ?>);" role="button">Eliminar</a>
+                                    <a class="btn btn-danger" href="javascript:borrar(<?php echo $registro['id']; ?>);" role="button">Eliminar</a>
                                 </td>
                             </tr>
                     <?php

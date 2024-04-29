@@ -86,7 +86,7 @@ $lista_equipos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
 <style>
     body {
-        background-image: url("../../img/FLA9.jpg");
+        background-image: url("../../img/FLA13.jpg");
         background-size: cover;
         /* Ajusta la imagen al tamaño del contenedor */
         background-repeat: no-repeat;
@@ -99,10 +99,15 @@ $lista_equipos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
      
         margin-left: 4px;
     }
+
+    .card-transparent {
+        background-color: rgba(255, 255, 255, 0.9);
+        /* Cambia los valores RGB y el valor alfa (0.7) según tus preferencias */
+    }
 </style>
 
 <br>
-<div class="card shadow-lg">
+<div class="card card-transparent">
     <div class="card-header">
         Prestamo Equipos
     </div>

@@ -77,15 +77,20 @@ if ($_POST) {
 
 <style>
     body {
-        background-image: url("../../img/FLA10.jpg");
+        background-image: url("../../img/FLA13.jpg");
         background-size: cover;
         /* Ajusta la imagen al tamaño del contenedor */
         background-repeat: no-repeat;
     }
+
+    .card-transparent {
+        background-color: rgba(255, 255, 255, 0.9);
+        /* Cambia los valores RGB y el valor alfa (0.7) según tus preferencias */
+    }
 </style>
 
 <br>
-<div class="card">
+<div class="card card-transparent">
     <div class="card-header">
         Datos de los equipos
     </div>

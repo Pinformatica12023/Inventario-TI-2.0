@@ -52,15 +52,20 @@ if ($_POST) {
 
 <style>
     body {
-        background-image: url("../../img/FLA10.jpg");
+        background-image: url("../../img/FLA13.jpg");
         background-size: cover;
         /* Ajusta la imagen al tamaño del contenedor */
         background-repeat: no-repeat;
     }
+
+    .card-transparent {
+        background-color: rgba(255, 255, 255, 0.9);
+        /* Cambia los valores RGB y el valor alfa (0.7) según tus preferencias */
+    }
 </style>
 
 <br>
-<div class="card">
+<div class="card card-transparent">
     <div class="card-header">
         Datos de los bienes
     </div>
@@ -68,30 +73,36 @@ if ($_POST) {
 
         <form action="" method="post" enctype="multipart/form-data">
 
-            <div class="mb-3">
-                <label for="txtID" class="form-label">ID</label>
-                <input type="text" value="<?php echo $txtID; ?>" readonly class="form-control" name="txtID" id="txtId" aria-describedby="helpId" placeholder="ID">
+             <div class="row">
+
+                <div class="mb-3 col-lg-3">
+                    <label for="txtID" class="form-label">ID</label>
+                    <input type="text" value="<?php echo $txtID; ?>" readonly class="form-control" name="txtID" id="txtId" aria-describedby="helpId" placeholder="ID">
+                </div>
+
+                <div class="mb-3 col-lg-5">
+                    <label for="identificacion" class="form-label">Identificacion</label>
+                    <input type="text" value="<?php echo $registro_recuperado['identificacion']; ?>" class="form-control" name="identificacion" id="identificacion" aria-describedby="helpId" placeholder="">
+                </div>
+
+                <div class="mb-3 col-lg-4">
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input type="text" value="<?php echo $registro_recuperado['nombre']; ?>" class="form-control" name="nombre" id="nombre" aria-describedby="helpId" placeholder="">
+                </div>
+
+                <div class="mb-3 col-lg-6">
+                    <label for="cargo" class="form-label">Cargo</label>
+                    <input type="text" value="<?php echo $registro_recuperado['cargo']; ?>" class="form-control" name="cargo" id="cargo" aria-describedby="helpId" placeholder="">
+                </div>
+
+                <div class="mb-3 col-lg-6">
+                    <label for="dependencia" class="form-label">Dependencia</label>
+                    <input type="text" value="<?php echo $registro_recuperado['dependencia']; ?>" class="form-control" name="dependencia" id="dependencia" aria-describedby="helpId" placeholder="">
+                </div>
+
             </div>
 
-            <div class="mb-3">
-                <label for="identificacion" class="form-label">Identificacion</label>
-                <input type="text" value="<?php echo $registro_recuperado['identificacion']; ?>" class="form-control" name="identificacion" id="identificacion" aria-describedby="helpId" placeholder="">
-            </div>
-
-            <div class="mb-3">
-                <label for="nombre" class="form-label">Nombre</label>
-                <input type="text" value="<?php echo $registro_recuperado['nombre']; ?>" class="form-control" name="nombre" id="nombre" aria-describedby="helpId" placeholder="">
-            </div>
-
-            <div class="mb-3">
-                <label for="cargo" class="form-label">Cargo</label>
-                <input type="text" value="<?php echo $registro_recuperado['cargo']; ?>" class="form-control" name="cargo" id="cargo" aria-describedby="helpId" placeholder="">
-            </div>
-
-            <div class="mb-3">
-                <label for="dependencia" class="form-label">Dependencia</label>
-                <input type="text" value="<?php echo $registro_recuperado['dependencia']; ?>" class="form-control" name="dependencia" id="dependencia" aria-describedby="helpId" placeholder="">
-            </div>
+         
             
 
 
