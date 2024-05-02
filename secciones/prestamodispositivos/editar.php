@@ -21,8 +21,10 @@ if (isset($_GET['txtID'])) {
         $dispositivo = $registro_recuperado["dispositivo"];
         $fechadispositivo = $registro_recuperado["fechadispositivo"];
         $acta = $registro_recuperado["acta"];
-        $estado = $registro_recuperado["estado"];
+        $estado = $registro_recuperado["Estado_Prestamo"];
         $observacion = $registro_recuperado["observacion"];
+
+        echo $dispositivo;
 
         $sentenciaDispositivo = $conexion->prepare("SELECT * FROM dispositivos Where id=:dispositivo");
         $sentenciaDispositivo->bindParam(":dispositivo", $dispositivo);
@@ -43,7 +45,8 @@ if ($_POST) {
     $txtID = (isset($_POST['txtID'])) ? $_POST['txtID'] : "";
     $nombreusuario = (isset($_POST["nombreusuario"]) ? $_POST["nombreusuario"] : "");
     $nombredependencia = (isset($_POST["nombredependencia"]) ? $_POST["nombredependencia"] : "");
-    $dispositivo = (isset($_POST["dispositivo"]) ? $_POST["dispositivo"] : "");
+    // $dispositivo = (isset($_POST["dispositivo"]) ? $_POST["dispositivo"] : "no esta llegando el dispositivo");
+    
     $fechadispositivo = (isset($_POST["fechadispositivo"]) ? $_POST["fechadispositivo"] : "");
     $acta = (isset($_FILES["acta"]['name']) ? $_FILES["acta"]['name'] : "");
     $estado = (isset($_POST["estado"]) ? $_POST["estado"] : "");
@@ -88,14 +91,14 @@ if ($_POST) {
     // Actualizar los otros campos en la base de datos
     $sentencia = $conexion->prepare("UPDATE prestamodispositivo SET identificacion=:identificacion, 
     nombreusuario=:nombreusuario, 
-    nombredependencia=:nombredependencia, dispositivo=:dispositivo, fechadispositivo=:fechadispositivo, acta=:acta, 
-    estado=:estado, observacion=:observacion WHERE id=:id ");
+    nombredependencia=:nombredependencia, fechadispositivo=:fechadispositivo, acta=:acta, 
+    Estado_Prestamo=:estado, observacion=:observacion WHERE id=:id ");
 
     // Asignando los valores que vienen del método POST (los que vienen del formulario)
     $sentencia->bindParam(":identificacion", $identificacion);
     $sentencia->bindParam(":nombreusuario", $nombreusuario);
     $sentencia->bindParam(":nombredependencia", $nombredependencia);
-    $sentencia->bindParam(":dispositivo", $dispositivo);
+    // $sentencia->bindParam(":dispositivo", $dispositivo);
     $sentencia->bindParam(":fechadispositivo", $fechadispositivo);
     $sentencia->bindParam(":acta", $nombreaArchivo_Acta);
     $sentencia->bindParam(":estado", $estado);
@@ -114,6 +117,7 @@ $lista_dispositivos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
 
 ?>
+
 <?php include("../../estructura/header.php"); ?>
 
 <style>
@@ -141,17 +145,23 @@ $lista_dispositivos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
         <form action="" method="post" enctype="multipart/form-data">
             <div class="row">
 
-                <div class="mb-3 col-lg-6">
+                <div class="mb-3 col-lg-3">
                     <label for="txtID" class="form-label">ID</label>
                     <input type="text" value="<?php echo $txtID; ?>" readonly class="form-control" name="txtID" id="txtId" aria-describedby="helpId" placeholder="ID">
                 </div>
 
-                <div class="mb-3 col-lg-6">
+                <div class="mb-3 col-lg-3">
                     <label for="estado" class="form-label">Estado</label>
-                    <select class="form-select"  value="<?php echo $registro_recuperado['Estado_prestamo']; ?>" name="estado" id="estado">
+                    <select class="form-select"  value="<?php echo $registro_recuperado['Estado_Prestamo']; ?>" name="estado" id="estado">
+                        <option selected value="<?php echo $registro_recuperado['Estado_Prestamo']; ?>" ><?php echo $registro_recuperado['Estado_Prestamo']; ?></option>
                         <option value="EN_CURSO">EN CURSO</option>
                         <option value="FINALIZADO">FINALIZADO</option>
                     </select>
+                </div>
+
+                <div class="mb-3 col-lg-6">
+                    <label for="nombredependencia" class="form-label">Dependencia</label>
+                    <input type="text" value="<?php echo $registro_recuperado['nombredependencia']; ?>" class="form-control" name="nombredependencia" id="nombredependencia" readonly>
                 </div>
 
                 <div class="mb-3 col-lg-6">
@@ -164,26 +174,29 @@ $lista_dispositivos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                     <input type="text" value="<?php echo $registro_recuperado['nombreusuario']; ?>" class="form-control" name="nombreusuario" id="nombreusuario" readonly>
                 </div>
 
-                <div class="mb-3 col-lg-6">
-                    <label for="nombredependencia" class="form-label">Dependencia</label>
-                    <input type="text" value="<?php echo $registro_recuperado['nombredependencia']; ?>" class="form-control" name="nombredependencia" id="nombredependencia" readonly>
-                </div>
+               
 
                 <div class="mb-3 col-lg-6">
                     <label for="fechadispositivo" class="form-label">Fecha Asignación</label>
                     <input type="date" value="<?php echo $registro_recuperado['fechadispositivo']; ?>" class="form-control" name="fechadispositivo" id="fechadispositivo" aria-describedby="helpId" placeholder="">
                 </div>
 
+                <div class="form-group col-lg-6">
+                    <label for="" class="form-label fs-5 ">Fecha Fin</label>
+                    <input type="date" class="form-control"  value="<?php if($registro_recuperado['fechaFin']=="" || $registro_recuperado['fechaFin']==null){
+                        echo "No hay fecha de asignación registrada en este prestamo";
+                    }else{
+                        echo $registro_recuperado['fechaFin'];
+                    }?>">
+                </div>
+
                 <div class=" col-lg-6">
                     <label for="dispositivo" class="form-label">Dispositivo</label>
-                    <select disabled value="<?php echo $registro_recuperado['dispositivo']; ?>" class="form-select " name="dispositivo" id="dispositivo">
-                    <option value="<?php echo $registro_recuperado['dispositivo']; ?>" selected><?php echo $nombreDispositivo?></option>
-                        <?php foreach ($lista_dispositivos as $registro) { ?>
-                            <option value="<?php echo $registro['id'] ?>">
-                                <?php echo $registro['nombredeldispositivo'] ?></option>
-                        <?php } ?>
+                    <select disabled class="form-select" value="<?php echo $registro_recuperado['dispositivo']; ?>" name="dispositivo" id="dispositivo">
+                        <option selected value="<?php echo $registro_recuperado['dispositivo']; ?>" ><?php echo $nombreDispositivo; ?></option>
                     </select>
                 </div>
+
                  <!-- Acta -->
                  <div class=" col-lg-6">
                     <label for="acta" class="form-label">Acta:</label>
@@ -210,7 +223,7 @@ $lista_dispositivos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
             </div>
             
             <div class="text-end" >
-                <button type="submit" class="btn btn-success ">Agregar</button>
+                <button type="submit" class="btn btn-success ">Editar</button>
                 <a name="" id="" class="btn btn-primary " href="index.php" role="button">Cancelar</a>
             </div>
 

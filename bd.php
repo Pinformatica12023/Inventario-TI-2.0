@@ -1,7 +1,7 @@
 ﻿<?php
 
 $server = "127.0.0.1";
-$bd = "inventariolocal";
+$bd = "inventario";
 $user = "root";
 $password = "";
 

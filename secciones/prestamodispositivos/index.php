@@ -6,12 +6,18 @@
 
         $txtID = (isset($_GET['ChangeStatusID'])) ? $_GET['ChangeStatusID'] : "";
         try {
+
+
+            date_default_timezone_set('America/Bogota'); // Establecer la zona horaria de Bogotá, Colombia
+            // Obtener la fecha actual
+            $fecha_actual = date('Y-m-d'); // Formato: Año-Mes-Día
             // Iniciar transacción
             $conexion->beginTransaction();
 
             // Cambiar el estado del préstamo a 'FINALIZADO'
-            $sentenciaCambioEstadoPrestamo = $conexion->prepare("UPDATE prestamodispositivo SET Estado_Prestamo = 'FINALIZADO' WHERE id = :id");
+            $sentenciaCambioEstadoPrestamo = $conexion->prepare("UPDATE prestamodispositivo SET Estado_Prestamo = 'FINALIZADO',FechaFin = :FechaActual WHERE id = :id");
             $sentenciaCambioEstadoPrestamo->bindParam(":id", $txtID);
+            $sentenciaCambioEstadoPrestamo->bindParam(":FechaActual",$fecha_actual);
             $sentenciaCambioEstadoPrestamo->execute();
             
             // echo "<script>console.log('ya actualizamos el estado' );</script>";
@@ -213,6 +219,15 @@ $lista_prestamodispositivo = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                                                         echo $registro['fechadispositivo'];
                                                     }?>">
                                                 </div>
+
+                                                <div class="form-group col-lg-6">
+                                                    <label for="" class="form-label fs-5 ">Fecha Fin</label>
+                                                    <input type="date" class="form-control" readonly value="<?php if($registro['fechaFin']=="" || $registro['fechaFin']==null){
+                                                        echo "No hay fecha de asignación registrada en este prestamo";
+                                                    }else{
+                                                        echo $registro['fechaFin'];
+                                                    }?>">
+                                                </div>
                                                 <div class="form-group col-lg-6">
                                                     <label for="" class="form-label fs-5 ">Estado</label>
                                                     <input type="text" class="form-control <?php echo $registro['Estado_Prestamo'] == 'EN_CURSO' ? 'text-success' : 'text-danger'; ?>" readonly value="<?php if($registro['Estado_Prestamo']=="" || $registro["Estado_Prestamo"]==null){
@@ -221,7 +236,7 @@ $lista_prestamodispositivo = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                                                         echo $registro['Estado_Prestamo'];
                                                     }?>">
                                                 </div>
-                                                <div class="form-group">
+                                                <div class="form-group col-lg-6">
                                                     <label for="" class="form-label fs-5 ">observación</label>
                                                     <input type="text" class="form-control" readonly value="<?php if($registro['observacion']=="" || $registro["observacion"]==null){
                                                         echo "No hay observaciones registradas en este préstamo";
