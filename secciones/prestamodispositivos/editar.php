@@ -148,7 +148,7 @@ $lista_dispositivos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
                 <div class="mb-3 col-lg-6">
                     <label for="estado" class="form-label">Estado</label>
-                    <select disabled value="<?php echo $registro_recuperado['Estado_prestamo']; ?>" class="form-select " name="estado" id="estado">
+                    <select class="form-select"  value="<?php echo $registro_recuperado['Estado_prestamo']; ?>" name="estado" id="estado">
                         <option value="EN_CURSO">EN CURSO</option>
                         <option value="FINALIZADO">FINALIZADO</option>
                     </select>

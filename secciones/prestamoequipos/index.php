@@ -100,10 +100,13 @@ $lista_prestamoequipo = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
 <!--Fondo transparente para el cuadro -->
 <style>
+
     .card-transparent {
-        background-color: rgba(255, 255, 255, 0.9);
+        background-color: rgba(255, 255, 255, 0.8);
         /* Cambia los valores RGB y el valor alfa (0.7) según tus preferencias */
     }
+    
+    
 
     /* Estilo para la tabla */
     #tabla_id {
@@ -111,6 +114,8 @@ $lista_prestamoequipo = $sentencia->fetchAll(PDO::FETCH_ASSOC);
         /* Ajusta el ancho máximo del contenido */
         overflow-x: auto;
         table-layout: auto;
+       
+    
         
         /* Distribución automática de las columnas */
     }
@@ -149,7 +154,7 @@ $lista_prestamoequipo = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
 <br />
 
-<h1 class="text-center text-light fw-bold">Préstamo equipos</h1>
+<h1 class="text-center text-light  fw-bold">Préstamo equipos</h1>
 
 
 
@@ -161,16 +166,18 @@ $lista_prestamoequipo = $sentencia->fetchAll(PDO::FETCH_ASSOC);
     
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered" id="tabla_id" >
+                    <table class="table table-bordered imagen-contenedor" id="tabla_id" >
                         <thead>
                             <tr>
+   
                                 <!-- <th scope="col">Acciones</th> -->
                                 <th scope="col">Actas</th>
                                 <th scope="col" class="hidden-column">Id</th>
-                                <th scope="col">Acta</th>
+                               
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Equipo</th>
                                 <th scope="col">Dependencia</th>
+                                <th scope="col">Acta</th>
                                
                                 <th scope="col">Estado</th>
                             </tr>
@@ -271,29 +278,26 @@ $lista_prestamoequipo = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                                                 </div>
                                             </div>
 
-                                        <div class="modal-footer">
-                                            
-                                            <a class="btn btn-info" href="editar.php?txtID=<?php echo $registro['id']; ?>" role="button">Editar</a>
-                                            <a class="btn btn-success" href="javascript:finalizarPrestamo(<?php echo $registro['id']; ?>);" role="button">Finalizar</a>
-                                            <a class="btn btn-danger" href="javascript:borrar(<?php echo $registro['id']; ?>);" role="button">Eliminar</a>
+                                        <div class="row mb-2 mt-2">
+                                            <div class="col-lg-6" >
+                                                <a class="btn btn-success" href="javascript:finalizarPrestamo(<?php echo $registro['id']; ?>);" role="button">Finalizar</a>
+                                                <a class="btn btn-danger" href="javascript:borrar(<?php echo $registro['id']; ?>);" role="button">Eliminar</a>
+                                            </div>
+                                            <div class="col-lg-6 text-end" >
+                                                <a class="btn btn-info text-light" href="editar.php?txtID=<?php echo $registro['id']; ?>" role="button">Editar</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <tr  id="<?php echo $registro["id"] ?>" >
                             
-                                <td>
+                                <td style="width: 100px;">
                                     <a class="btn btn-dark" href="../../acta_entrega_devolucion/actaentregaequipo.php?txtID=<?php echo $registro['id']; ?>" role="button" target="_blank">Entrega</a>
-                                    |<a class="btn btn-warning" href="../../acta_entrega_devolucion/actadevolucionequipo.php?txtID=<?php echo $registro['id']; ?>" role="button" target="_blank">Devolución</a>
+                                    <a class="btn btn-warning" href="../../acta_entrega_devolucion/actadevolucionequipo.php?txtID=<?php echo $registro['id']; ?>" role="button" target="_blank">Devolución</a>
                                 </td>
                                 <td scope="row" class="hidden-column"><?php echo $registro['id']; ?></td>
-                                <td>
-                                    <?php if (!empty($registro['acta'])) : ?>
-                                        <a href="../../secciones/actas/<?php echo $registro['acta']; ?>"><?php echo $registro['acta']; ?></a>
-                                    <?php else : ?>
-                                        <span style="color: red; font-weight: bold;">No hay actas disponibles</span>
-                                    <?php endif; ?>
-                                </td>
+                               
                                 <td><?php echo $registro['nombre']; ?></td>
                                 <td>
                                     <?php
@@ -306,6 +310,13 @@ $lista_prestamoequipo = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                                     ?>
                                 </td>
                                 <td><?php echo $registro['dependencia']; ?></td>
+                                <td>
+                                    <?php if (!empty($registro['acta'])) : ?>
+                                        <a href="../../secciones/actas/<?php echo $registro['acta']; ?>"><?php echo $registro['acta']; ?></a>
+                                    <?php else : ?>
+                                        <span style="color: red; font-weight: bold;">No hay actas disponibles</span>
+                                    <?php endif; ?>
+                                </td>
                                 <td class="<?php echo $registro['EstadoPrestamo'] == 'EN_CURSO' ? 'text-success' : 'text-danger'; ?>"><?php echo $registro['EstadoPrestamo']; ?></td>
                                 
                             </tr>

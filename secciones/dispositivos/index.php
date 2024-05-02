@@ -203,12 +203,12 @@ $lista_dispositivos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                     <a class="btn btn-dark" href="../../acta_entrega_devolucion/actaentregadispositivo.php?txtID=${prestamo.id}" role="button" target="_blank">Entrega</a>
                     <a class="btn btn-warning" href="../../acta_entrega_devolucion/actadevoluciondispositivo.php?txtID=${prestamo.id}" role="button" target="_blank">Devolución</a>
                 </td>
-                <td>
-                    ${prestamo.acta !== '' && prestamo.acta !== null ? `<a href="../../secciones/actas/${prestamo.acta}">${prestamo.acta}</a>` : `<span style="color: red; font-weight: bold;">No hay actas disponibles</span>`}
+                <td >
+                    ${prestamo.acta !== '' && prestamo.acta !== null ? `<a target="_blank" href="../../secciones/actas/${prestamo.acta}">${prestamo.acta}</a>` : `<span style="color: red; font-weight: bold;">No hay actas disponibles</span>`}
                 </td>
                 <td>${prestamo.nombreusuario}</td>
                 <td>${prestamo.nombredependencia}</td>
-                <td>${prestamo.Estado_prestamo}</td>
+                <td>${prestamo.Estado_Prestamo}</td>
                
                 `;
                 tablaBody.appendChild(filaPrestamo);

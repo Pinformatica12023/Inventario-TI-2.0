@@ -10,7 +10,7 @@
             $conexion->beginTransaction();
 
             // Cambiar el estado del préstamo a 'FINALIZADO'
-            $sentenciaCambioEstadoPrestamo = $conexion->prepare("UPDATE prestamodispositivo SET Estado_prestamo = 'FINALIZADO' WHERE id = :id");
+            $sentenciaCambioEstadoPrestamo = $conexion->prepare("UPDATE prestamodispositivo SET Estado_Prestamo = 'FINALIZADO' WHERE id = :id");
             $sentenciaCambioEstadoPrestamo->bindParam(":id", $txtID);
             $sentenciaCambioEstadoPrestamo->execute();
             
@@ -151,10 +151,11 @@ $lista_prestamodispositivo = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                     <tr>
                         <!-- <th scope="col">Acciones</th> -->
                         <th scope="col">Actas</th>
-                        <th scope="col">Acta</th>
+
                         <th scope="col">Nombre</th>
                         <th scope="col">Dispositivo</th>
                         <th scope="col">Dependencia</th>
+                        <th scope="col">Acta</th>
                         <th scope="col">Estado</th>
                         <th scope="col" class="hidden-column">Id</th>
                         
@@ -169,6 +170,8 @@ $lista_prestamodispositivo = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                         <div class="modal-header">
+                                           
+                                                
                                             <h5 class="modal-title" id="exampleModalLabel">Detalles Préstamo Dispositivo:   <?php
                                                 $idDispositivo = $registro['dispositivo'];
                                                 $sentenciaModelo = $conexion->prepare("SELECT nombredeldispositivo FROM dispositivos WHERE id=:id");
@@ -178,7 +181,11 @@ $lista_prestamodispositivo = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                                                 echo ($dispositivo) ? $dispositivo['nombredeldispositivo'] : 'No disponible';
                                                 ?>
                                             </h5>
+                                        
+                                        
+                                            
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+ 
                                         </div>
                                         <div class="modal-body">
                                             <div class="row">
@@ -208,10 +215,10 @@ $lista_prestamodispositivo = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                                                 </div>
                                                 <div class="form-group col-lg-6">
                                                     <label for="" class="form-label fs-5 ">Estado</label>
-                                                    <input type="text" class="form-control <?php echo $registro['Estado_prestamo'] == 'EN_CURSO' ? 'text-success' : 'text-danger'; ?>" readonly value="<?php if($registro['Estado_prestamo']=="" || $registro["Estado_prestamo"]==null){
+                                                    <input type="text" class="form-control <?php echo $registro['Estado_Prestamo'] == 'EN_CURSO' ? 'text-success' : 'text-danger'; ?>" readonly value="<?php if($registro['Estado_Prestamo']=="" || $registro["Estado_Prestamo"]==null){
                                                         echo "No hay estado registrado en este préstamo";
                                                     }else{
-                                                        echo $registro['Estado_prestamo'];
+                                                        echo $registro['Estado_Prestamo'];
                                                     }?>">
                                                 </div>
                                                 <div class="form-group">
@@ -225,28 +232,27 @@ $lista_prestamodispositivo = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
                                             </div>
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                            <a class="btn btn-info text-light" href="editar.php?txtID=<?php echo $registro['id']; ?>" role="button">Editar</a>
-                                            <a class="btn btn-danger" href="javascript:borrar(<?php echo $registro['id']; ?>);" role="button">Eliminar</a>
-                                            <a class="btn btn-success" href="javascript:finalizarPrestamo(<?php echo $registro['id']; ?>);" role="button">Finalizar</a>
+                                        <div class="row m-2">
+                                            
+                                            <div class="col-lg-6 ">
+                                                <a class="btn btn-danger" href="javascript:borrar(<?php echo $registro['id']; ?>);" role="button">Eliminar</a>
+                                                <a class="btn btn-success" href="javascript:finalizarPrestamo(<?php echo $registro['id']; ?>);" role="button">Finalizar</a>
+                                            </div>
+                                            <div class="col-lg-6 text-end "> 
+                                                <a class="btn btn-info text-light" href="editar.php?txtID=<?php echo $registro['id']; ?>" role="button">Editar</a>
+                                            </div>
+  
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <tr id="<?php echo $registro['id'] ?>">
                                 
-                                <td>
+                                <td style="width: 100px;" >
                                     <a class="btn btn-dark" href="../../acta_entrega_devolucion/actaentregadispositivo.php?txtID=<?php echo $registro['id']; ?>" role="button" target="_blank">Entrega</a>
                                     <a class="btn btn-warning" href="../../acta_entrega_devolucion/actadevoluciondispositivo.php?txtID=<?php echo $registro['id']; ?>" role="button" target="_blank">Devolución</a>
                                 </td>
-                                <td>
-                                    <?php if (!empty($registro['acta'])) : ?>
-                                        <a href="../../secciones/actas/<?php echo $registro['acta']; ?>"><?php echo $registro['acta']; ?></a>
-                                    <?php else : ?>
-                                        <span style="color: red; font-weight: bold;">No hay actas disponibles</span>
-                                    <?php endif; ?>
-                                </td>
+                               
                                 <td><?php echo $registro['nombreusuario']; ?></td>
                                 <td>
                                     <?php
@@ -259,7 +265,14 @@ $lista_prestamodispositivo = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                                     ?>
                                 </td>
                                 <td><?php echo $registro['nombredependencia']; ?></td>
-                                <td class="<?php echo $registro['Estado_prestamo'] == 'EN_CURSO' ? 'text-success' : 'text-danger'; ?>"><?php echo $registro['Estado_prestamo']; ?></td>
+                                <td>
+                                    <?php if (!empty($registro['acta'])) : ?>
+                                        <a href="../../secciones/actas/<?php echo $registro['acta']; ?> " target="_blank"><?php echo $registro['acta']; ?></a>
+                                    <?php else : ?>
+                                        <span style="color: red; font-weight: bold;">No hay actas disponibles</span>
+                                    <?php endif; ?>
+                                </td>
+                                <td class="<?php echo $registro['Estado_Prestamo'] == 'EN_CURSO' ? 'text-success' : 'text-danger'; ?>"><?php echo $registro['Estado_Prestamo']; ?></td>
                                 <td scope="row" class="hidden-column"><?php echo $registro['id']; ?></td>
                               
                             </tr>

@@ -45,11 +45,12 @@ if ($_POST) {
     $marca = (isset($_POST["marca"])?$_POST["marca"]:"");
     $almacenamiento = (isset($_POST["almacenamiento"])?$_POST["almacenamiento"]:"");
     $observacion = (isset($_POST["observacion"])?$_POST["observacion"]:"");
+    $Estado = (isset($_POST["Estado"])?$_POST["Estado"]:"");
 
     // Actualizar los otros campos en la base de datos
     $sentencia = $conexion->prepare("UPDATE equipos SET numeropc=:numeropc, serialpc=:serialpc, serialcargador=:serialcargador, placa=:placa, 
     activo=:activo, fechacompra=:fechacompra, tipo=:tipo, ram=:ram, 
-    procesador=:procesador, marca=:marca, almacenamiento=:almacenamiento, observacion=:observacion WHERE id=:id ");
+    procesador=:procesador, marca=:marca, almacenamiento=:almacenamiento, observacion=:observacion,Estado=:estado WHERE id=:id ");
 
     // Asignando los valores que vienen del método POST (los que vienen del formulario)
     $sentencia->bindParam(":numeropc", $numeropc);
@@ -64,6 +65,7 @@ if ($_POST) {
     $sentencia->bindParam(":marca", $marca);
     $sentencia->bindParam(":almacenamiento", $almacenamiento);
     $sentencia->bindParam(":observacion", $observacion);
+    $sentencia->bindParam(":estado", $Estado);
     $sentencia->bindParam(":id", $txtID);
     $sentencia->execute();
 
@@ -136,7 +138,7 @@ if ($_POST) {
 
                 <div class="mb-3 col-lg-6">
                     <label for="tipo" class="form-label">Tipo</label>
-                    <select  value="<?php echo $registro_recuperado['tipo']; ?>" class="form-select form-select-sm" name="tipo" id="tipo" disabled>
+                    <select  value="<?php echo $registro_recuperado['tipo']; ?>" class="form-select form-select" name="tipo" id="tipo" disabled>
                         <option selected><?php echo $registro_recuperado['tipo'] ?></option>
                         <option value="PORTATIL">PORTATIL</option>
                         <option value="ESCRITORIO">ESCRITORIO</option>
@@ -166,6 +168,18 @@ if ($_POST) {
                 <div class="mb-3 col-lg-6">
                     <label for="observacion" class="form-label">Observacion</label>
                     <input type="text" value="<?php echo $registro_recuperado['observacion']; ?>" class="form-control" name="observacion" id="observacion" aria-describedby="helpId" placeholder="">
+                </div>
+
+               
+
+                <div class="mb-3 col-lg-6">
+                    <label for="tipo" class="form-label">Estado</label>
+                    <select  value="<?php echo $registro_recuperado['Estado']; ?>" class="form-select form-select" name="Estado" id="Estado" >
+                        <option selected><?php echo $registro_recuperado['Estado'] ?></option>
+                        <option value="DISPONIBLE">DISPONIBLE</option>
+                        <option value="DISPONIBLE">EN_PRESTAMO</option>
+                        <option value="DE_BAJA">DE_BAJA</option>
+                    </select>
                 </div>
             
             </div>
