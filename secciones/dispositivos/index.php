@@ -116,7 +116,7 @@ $lista_dispositivos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered" id="tabla_id_prestamos"  >
+                        <table class="table table-bordered" id="tabla_id_prestamos">
                             <thead>
                                 <tr>
                                     <!-- <th scope="col">Acciones</th> -->

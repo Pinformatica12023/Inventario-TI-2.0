@@ -15,18 +15,18 @@ if (isset($_GET['txtID'])) {
 
     if ($registro_recuperado) {
         // Asignar los valores a las variables para usar en el formulario
-        $numeropc = $registro_recuperado["numeropc"];
-        $serialpc = $registro_recuperado["serialpc"];
-        $serialcargador = $registro_recuperado["serialcargador"];
-        $placa = $registro_recuperado["placa"];
-        $activo = $registro_recuperado["activo"];
-        $fechacompra = $registro_recuperado["fechacompra"];
-        $tipo = $registro_recuperado["tipo"];
-        $ram = $registro_recuperado["ram"];
-        $procesador = $registro_recuperado["procesador"];
-        $marca = $registro_recuperado["marca"];
-        $almacenamiento = $registro_recuperado["almacenamiento"];
-        $observacion = $registro_recuperado["observacion"];
+        // $numeropc = $registro_recuperado["numeropc"];
+        // $serialpc = $registro_recuperado["serialpc"];
+        // $serialcargador = $registro_recuperado["serialcargador"];
+        // $placa = $registro_recuperado["placa"];
+        // $activo = $registro_recuperado["activo"];
+        // $fechacompra = $registro_recuperado["fechacompra"];
+        // $tipo = $registro_recuperado["tipo"];
+        // $ram = $registro_recuperado["ram"];
+        // $procesador = $registro_recuperado["procesador"];
+        // $marca = $registro_recuperado["marca"];
+        // $almacenamiento = $registro_recuperado["almacenamiento"];
+        // $observacion = $registro_recuperado["observacion"];
     }
 }
 
@@ -39,13 +39,13 @@ if ($_POST) {
     $placa = (isset($_POST["placa"])?$_POST["placa"]:"");
     $activo = (isset($_POST["activo"])?$_POST["activo"]:"");
     $fechacompra = (isset($_POST["fechacompra"])?$_POST["fechacompra"]:"");
-    $tipo = (isset($_POST["tipo"])?$_POST["tipo"]:"");
+    $tipo = (isset($_POST["tipo"])?$_POST["tipo"]:"nop esta llegando del formulario?");
     $ram = (isset($_POST["ram"])?$_POST["ram"]:"");
     $procesador = (isset($_POST["procesador"])?$_POST["procesador"]:"");
     $marca = (isset($_POST["marca"])?$_POST["marca"]:"");
     $almacenamiento = (isset($_POST["almacenamiento"])?$_POST["almacenamiento"]:"");
     $observacion = (isset($_POST["observacion"])?$_POST["observacion"]:"");
-    $Estado = (isset($_POST["Estado"])?$_POST["Estado"]:"");
+    $Estado = (isset($_POST["Estado"])?$_POST["Estado"]:"no esta llegando del formulario?");
 
     // Actualizar los otros campos en la base de datos
     $sentencia = $conexion->prepare("UPDATE equipos SET numeropc=:numeropc, serialpc=:serialpc, serialcargador=:serialcargador, placa=:placa, 
@@ -98,7 +98,7 @@ if ($_POST) {
     </div>
     <div class="card-body">
 
-        <form action="" method="post" enctype="multipart/form-data">
+        <form action="" method="post">
             <div class="row">
 
                 <div class="mb-3 col-lg-6">
@@ -135,13 +135,14 @@ if ($_POST) {
                     <label for="fechacompra" class="form-label">Fecha De Compra</label>
                     <input type="date" value="<?php echo $registro_recuperado['fechacompra']; ?>" class="form-control" name="fechacompra" id="fechacompra" aria-describedby="helpId" placeholder="">
                 </div>
+              
 
                 <div class="mb-3 col-lg-6">
                     <label for="tipo" class="form-label">Tipo</label>
-                    <select  value="<?php echo $registro_recuperado['tipo']; ?>" class="form-select form-select" name="tipo" id="tipo" disabled>
-                        <option selected><?php echo $registro_recuperado['tipo'] ?></option>
-                        <option value="PORTATIL">PORTATIL</option>
+                    <select value="<?php echo $registro_recuperado['tipo']; ?>"  class="form-select" name="tipo" id="tipo" > <?php echo $registro_recuperado['tipo']; ?>
+                        <option value="<?php echo $registro_recuperado['tipo']; ?>" selected><?php echo $registro_recuperado['tipo']; ?></option>
                         <option value="ESCRITORIO">ESCRITORIO</option>
+                        <option value="PORTATIL">PORTATIL</option>
                     </select>
                 </div>
 
@@ -174,10 +175,10 @@ if ($_POST) {
 
                 <div class="mb-3 col-lg-6">
                     <label for="tipo" class="form-label">Estado</label>
-                    <select  value="<?php echo $registro_recuperado['Estado']; ?>" class="form-select form-select" name="Estado" id="Estado" >
-                        <option selected><?php echo $registro_recuperado['Estado'] ?></option>
+                    <select  value="<?php echo $registro_recuperado['Estado']; ?>" class="form-select" name="Estado" id="Estado" >
+                        <option value="<?php echo $registro_recuperado['Estado']; ?>" selected><?php echo $registro_recuperado['Estado'] ?></option> 
                         <option value="DISPONIBLE">DISPONIBLE</option>
-                        <option value="DISPONIBLE">EN_PRESTAMO</option>
+                        <option value="EN_PRESTAMO">EN_PRESTAMO</option>
                         <option value="DE_BAJA">DE_BAJA</option>
                     </select>
                 </div>

@@ -10,7 +10,7 @@ if (isset($_GET['txtID'])) {
     // Obtener el ID a partir de los parámetros GET
     $txtID = (isset($_GET['txtID'])) ? $_GET['txtID'] : "";
 
-    $sentencia = $conexion->prepare("SELECT p.*, e.procesador, e.ram, e.almacenamiento 
+    $sentencia = $conexion->prepare("SELECT p.*, e.procesador, e.serialcargador, e.ram, e.almacenamiento 
     FROM prestamoequipo p INNER JOIN equipos e ON p.modelo = e.numeropc 
     WHERE p.id=:id");
     $sentencia->bindParam(":id", $txtID);
@@ -192,9 +192,9 @@ ob_start();
         <div class="signature-line">
             <hr class="space-sign">
             <p><strong>Funcionario Entrega</strong></p>
-            <p>DIEGO CALLE VÉLEZ</p>
+            <p>JUAN JOSE YEPES POSADA</p>
             <p><strong>Documento</strong></p>
-            <p>98527676</p>
+            <p>1128418787</p>
             <p><strong>Dependencia</strong></p>
             <p>INFORMÁTICA</p>
         </div>
