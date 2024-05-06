@@ -5,8 +5,8 @@ include("bd.php");
 if ($_POST && isset($_POST['modelo'])) {
     $modeloSeleccionado = $_POST['modelo'];
 
-    $sentencia = $conexion->prepare("SELECT serialpc,serialcargador, marca FROM equipos WHERE numeropc = :modelo");
-    $sentencia->bindParam(":modelo", $modeloSeleccionado);
+    $sentencia = $conexion->prepare("SELECT serialpc,serialcargador, marca FROM equipos WHERE id= :id");
+    $sentencia->bindParam(":id", $modeloSeleccionado);
     $sentencia->execute();
     
     $datosEquipo = $sentencia->fetch(PDO::FETCH_ASSOC);

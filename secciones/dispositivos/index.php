@@ -59,6 +59,7 @@ $lista_dispositivos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
 <br />
 <div class="row">
+<h1 class="text-center text-light fw-bold">Dispositivos</h1>
     <div class="col-lg-5">
         <div class="card card-transparent" >
             <div class="card-header">

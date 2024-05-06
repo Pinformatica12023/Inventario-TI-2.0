@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST["identificacion"])) {
     $identificacion = $_POST["identificacion"];
 
     // Realizar la consulta para obtener el nombre y la dependencia del usuario por su identificación
-    $sentencia = $conexion->prepare("SELECT nombre, dependencia FROM usuarios WHERE identificacion = :identificacion");
+    $sentencia = $conexion->prepare("SELECT * FROM usuarios WHERE identificacion = :identificacion");
     $sentencia->bindParam(":identificacion", $identificacion);
     $sentencia->execute();
 

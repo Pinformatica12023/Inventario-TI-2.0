@@ -184,13 +184,14 @@ ob_start();
 
         <div class="signature-line" style="text-align: center;">
             <hr class="space-sign">
-            <p><strong>Funcionario Recibe<strong></p>
-            <p>DIEGO CALLE VÉLEZ</p>
+            <p><strong>Funcionario Entrega</strong></p>
+            <p>JUAN JOSE YEPES POSADA</p>
             <p><strong>Documento</strong></p>
-            <p>98527676</p>
+            <p>1128418787</p>
             <p><strong>Dependencia</strong></p>
             <p>INFORMÁTICA</p>
         </div>
+       
     </div>
 
     <p class="note">

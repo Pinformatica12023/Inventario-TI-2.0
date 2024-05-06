@@ -10,7 +10,8 @@ if ($_POST) {
     $dispositivo = (isset($_POST["dispositivo"]) ? $_POST["dispositivo"] : '');
     $fechadispositivo = (isset($_POST["fechadispositivo"]) ? $_POST["fechadispositivo"] : NULL);
     $acta = (isset($_FILES["acta"]['name']) ? $_FILES["acta"]['name'] : '');
-    $estado = (isset($_POST["estado"]) ? $_POST["estado"] : '');
+    // $estado = (isset($_POST["estado"]) ? $_POST["estado"] : '');
+    $estado = "EN_CURSO";
     $observacion = (isset($_POST["observacion"]) ? $_POST["observacion"] : '');
 
     // Verificar si hay suficientes dispositivos disponibles
@@ -23,7 +24,7 @@ if ($_POST) {
     // Verificar si la cantidad disponible es mayor que cero para permitir el préstamo
     if ($cantidadDisponible > 0) {
         // Preparar la inserción de los datos en la tabla prestamodispositivo
-        $sentencia = $conexion->prepare("INSERT INTO prestamodispositivo(id, identificacion, nombreusuario, nombredependencia, dispositivo, fechadispositivo, acta, estado, observacion) 
+        $sentencia = $conexion->prepare("INSERT INTO prestamodispositivo(id, identificacion, nombreusuario, nombredependencia, dispositivo, fechadispositivo, acta, Estado_Prestamo, observacion) 
             VALUES (NULL, :identificacion, :nombreusuario, :nombredependencia, :dispositivo, :fechadispositivo, :acta, :estado, :observacion);");
 
         // Procesamiento del archivo adjunto (acta)

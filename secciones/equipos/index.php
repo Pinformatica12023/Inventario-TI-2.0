@@ -148,83 +148,7 @@ return $sentencia->fetchAll(PDO::FETCH_ASSOC);
                             
                             if (obtenerEquipos() !== null && is_array(obtenerEquipos())) {
                                 foreach (obtenerEquipos() as $registro) {?>
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="info<?php  echo $registro["id"] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-xl ">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">Detalles equipo: <?php echo $registro['numeropc'] ?></h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body  card-transparent">
-                                                    <div class="row mb-2">
-            
-                                                        <div class="form-group col-lg-4">
-                                                            <label for="" class="form-label fs-5 ">Serial cargador</label>
-                                                            <input type="text" class="form-control" readonly value="<?php if($registro['serialcargador']=="" || $registro["serialcargador"]==null){
-                                                                echo "No hay registrado un serial de cargador para este equipo";
-                                                            }else{
-                                                                echo $registro['serialcargador'];
-                                                            }?>">
-                                                        </div>
-                                                        <div class="form-group col-lg-4">
-                                                            <label for="" class="form-label fs-5">Placa</label>
-                                                            <input type="text" class="form-control" readonly value="<?php if($registro["placa"]=="" || $registro["placa"]==null  ){echo "No hay registrado una placa para este equipo";}else{echo $registro["placa"];}?>">
-                                                        </div>
-                                                        <div class="form-group col-lg-4">
-                                                            <label for="" class="form-label fs-5">Tipo ordenador</label>
-                                                            <input type="text" class="form-control" readonly value="<?php if($registro["tipo"]=="" || $registro["tipo"]==null){echo "No hay registrado un tipo de ordenador para este equipo";}else{echo $registro["tipo"];}?>">
-                                                        </div>
-
-                                                        <div class="form-group col-lg-4">
-                                                            <label for="" class="form-label fs-5">Proveedor</label>
-                                                            <input type="text" class="form-control" readonly value="<?php if($registro["activo"]=="" || $registro["activo"]==null){echo "No hay registrado un activo para este equipo";}else{echo $registro["activo"];}?>">
-                                                        </div>
-                                                        <div class="form-group col-lg-4">
-                                                            <label for="" class="form-label fs-5">Almacenamiento</label>
-                                                            <input type="text" class="form-control" readonly value="<?php if($registro["almacenamiento"]=="" || $registro["almacenamiento"]==null ){echo "No hay registrado un almacenamiento para este equipo";}else{echo $registro["almacenamiento"];}?>">
-                                                        </div>
-                                                        <div class="form-group col-lg-4">
-
-                                                        <?php 
-                                                        if($registro["fechacompra"]==null){
-                                                        ?>
-                                                            
-                                                            <label for="" class="form-label fs-5">Fecha Compra</label>
-                                                            <input type="text" class="form-control" readonly placeholder="No hay fecha de compra registrada en este equipo">
-                                                            
-                                                        <?php
-                                                        }else{
-                                                            ?>
-                                                            
-                                                            <label for="" class="form-label fs-5 ">Fecha Compra:</label>
-                                                            <input type="date" class="form-control" readonly value="<?php echo $registro["fechacompra"];?>">
-                                                            
-                                                        <?php
-                                                        }
-                                                        ?>
-                                                        </div>
-                                                    
-                                                        <div class="form-group">
-                                                            <label for="" class="form-label fs-5 ">Obsevaciones</label>
-                                                            <textarea readonly  class="form-control"> <?php if($registro['observacion']==""){
-                                                                echo "No hay Observaciones en este equipo";
-                                                            }else{
-                                                                echo $registro["observacion"];
-                                                            } ?></textarea>
-                                                        </div>
-                                                    </div>  
-                                                    <a class="btn btn-info text-light" href="editar.php?txtID=<?php echo $registro['id']; ?>" role="button">Editar</a>
-                                                    <a class="btn btn-danger" href="javascript:borrar(<?php echo $registro['id']; ?>);" role="button">Eliminar</a>  
-                                                </div>
-                                                
-
-                                                
-                                                
-                                                
-                                            </div>
-                                        </div>
-                                    </div>
+                                   
                                     <tr id="<?php echo $registro["numeropc"] ?>">
                                         
                                         <td scope="row" class="hidden-column"><?php echo $registro['id']; ?></td>
@@ -277,7 +201,70 @@ return $sentencia->fetchAll(PDO::FETCH_ASSOC);
                     </div>
                 </div>
             </div>
-        </div>
+
+             <!-- Modal -->
+             <div class="modal fade" id="infoPrestamoRelacionados" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-xl ">
+                        <div class="modal-content">
+                            <div class="modal-header fw-bold fs-4" id="tituloModal">
+                                <!-- <h5 class="modal-title" id="exampleModalLabel">Detalles equipo: <?php echo $registro['numeropc'] ?></h5> -->
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="form-group col-lg-6">
+                                        <label for="" class="form-label fs-5 fw-bold ">Identificación Usuario</label>
+                                        <input type="text" class="form-control" id="identificacionUsuario" readonly >
+                                    </div>
+
+                                    <div class="form-group col-lg-6">
+                                        <label for="" class="form-label fs-5 fw-bold ">Equipo</label>
+                                        <input type="text" class="form-control" readonly id="numeropc">
+                                    </div>
+
+                                    <div class="form-group col-lg-6">
+                                        <label for="" class="form-label fs-5 fw-bold ">Nombre Usuario</label>
+                                        <input type="text" class="form-control" readonly id="nombreUsuario" >
+                                    </div>
+
+                                    <div class="form-group col-lg-6">
+                                        <label for="" class="form-label fs-5 fw-bold ">Serial PC</label>
+                                        <input type="text" class="form-control" readonly id="serialpc">
+                                    </div>
+                                    <div class="form-group col-lg-6">
+                                        <label for="" class="form-label fs-5 ">Dependencia</label>
+                                        <input type="text" class="form-control" readonly id="dependencia">
+                                    </div>
+                                                                        
+                                    
+                                    <div class="form-group col-lg-6">
+                                        <label for="" class="form-label fs-5 fw-bold ">Fecha asignación</label>
+                                        <input type="date" class="form-control" readonly id="fechaasignacion">
+                                    </div>
+                                    <div class="form-group col-lg-6">
+                                        <label for="" class="form-label fs-5 fw-bold ">Estado</label>
+                                        <input type="text" class="form-control" readonly id="estado">
+                                    </div>
+                                    <div class="form-group col-lg-6">
+                                        <label for="" class="form-label fs-5 fw-bold ">observación</label>
+                                        <input type="text" class="form-control" readonly id="observacion">
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="row  m-2">
+                                    <div class="col-lg-6"  id="modalFooter" >
+
+                                    </div>
+                                    <div class="col-lg-6 text-end" id="modalFooterEditar" >
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+           
 
         <div class="row mt-4">
             <div id="informacionEquipo"  style="display: none;">
@@ -420,7 +407,7 @@ return $sentencia->fetchAll(PDO::FETCH_ASSOC);
             botonEditar.textContent = 'Editar';
 
             const botonEliminar = document.createElement('a');
-            botonEliminar.classList.add('btn', 'btn-danger');
+            botonEliminar.classList.add('btn', 'btn-danger','ms-2');
             botonEliminar.setAttribute('href', 'javascript:borrar(' + informacionEquipoObjeto["equipo_encontrado"][0]["id"] + ');');
             botonEliminar.setAttribute('role', 'button');
             botonEliminar.textContent = 'Eliminar';
@@ -434,12 +421,12 @@ return $sentencia->fetchAll(PDO::FETCH_ASSOC);
             // divInfo.appendChild(botonEliminar);
 
 
-
+            console.log(informacionEquipo["equipo_encontrado"]);
             if(informacionEquipoObjeto["equipo_encontrado"].length>0){
                 console.log("aca va la informacion del equipo");
                 tipo = informacionEquipoObjeto["equipo_encontrado"][0]["tipo"];
                 placa = informacionEquipoObjeto["equipo_encontrado"][0]["placa"];
-                serialCargador = informacionEquipoObjeto["equipo_encontrado"][0]["serialCargador"];
+                serialCargador = informacionEquipoObjeto["equipo_encontrado"][0]["serialcargador"];
                 proveedor = informacionEquipoObjeto["equipo_encontrado"][0]["activo"];
                 almacenamiento  = informacionEquipoObjeto["equipo_encontrado"][0]["almacenamiento"];
                 fechacompra = informacionEquipoObjeto["equipo_encontrado"][0]["fechacompra"];
@@ -530,6 +517,7 @@ return $sentencia->fetchAll(PDO::FETCH_ASSOC);
             const titulo = document.createElement('p');
 
             const tablaPrestamos = document.getElementById('tabla_id_prestamos');
+            
             const tablaBody = tablaPrestamos.querySelector('tbody');
             tablaBody.innerHTML = ''; // Limpiar el contenido existente
 
@@ -547,10 +535,97 @@ return $sentencia->fetchAll(PDO::FETCH_ASSOC);
                 console.log("mi so si hay datos");
                 
                 prestamosRelacionadosObjeto["lista_prestamoEquipos"].forEach((prestamo) => {
-                    console.log(prestamo.identificacion);
+                    
 
                     const filaPrestamo = document.createElement('tr');
-                   const tdEstadoPrestamo = document.createElement('td');
+                    const modalInfoPrestamoRelacionados =document.getElementById("infoPrestamoRelacionados");
+
+                    const headerModal = document.getElementById('tituloModal');
+                    headerModal.innerHTML  = '';
+                    const titulo = document.createElement('p');
+
+                    titulo.innerHTML = `Información Prestamo Equipo ${prestamo.modelo}`;
+
+                    // Create and configure close button
+                    const closeButton = document.createElement('button');
+                    closeButton.type = 'button';
+                    closeButton.classList.add('btn-close');
+                    closeButton.setAttribute('data-bs-dismiss', 'modal');
+                    closeButton.setAttribute('aria-label', 'Close');
+
+                    headerModal.appendChild(titulo);
+                    headerModal.appendChild(closeButton);
+
+                    const modalFooter= document.getElementById("modalFooter");
+                    modalFooter.innerHTML  = "";
+
+                    const modalFooterEditar= document.getElementById("modalFooterEditar");
+                    modalFooterEditar.innerHTML  = "";
+
+                    const botonEditarPrestamo = document.createElement('a');
+                    botonEditarPrestamo.classList.add('btn', 'btn-info', 'text-light');
+                    botonEditarPrestamo.setAttribute('href', `../prestamoequipos/editar.php?txtID=${prestamo.id}`);
+                    botonEditarPrestamo.setAttribute('role', 'button');
+                    botonEditarPrestamo.textContent = 'Editar';
+
+                    // Cree los botones "Editar" y "Eliminar"
+                    const botonEliminarPrestamo = document.createElement('a');
+                    botonEliminarPrestamo.classList.add('btn', 'btn-danger', 'text-light');
+                    botonEliminarPrestamo.setAttribute('role', 'button');
+
+
+
+                    botonEliminarPrestamo.textContent = 'Eliminar';
+
+
+
+
+
+                   
+
+                    const botonFinalizar = document.createElement('a');
+                    botonFinalizar.classList.add('btn', 'btn-success', 'me-2');
+                    botonFinalizar.setAttribute('role', 'button'); // Ensure it functions like a button
+
+                   
+                    botonFinalizar.addEventListener('click', function(event) {
+                    event.preventDefault(); // Prevent default anchor tag behavior
+
+                        Swal.fire({
+                            title: '¿Seguro que desea Finalizar el préstamo?',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6', // Optional: Customize confirm button color
+                            cancelButtonColor: '#d33', // Optional: Customize cancel button color
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                            // Redirect using window.location.href (preferred for clarity):
+                            window.location.href = "../prestamoequipos/index.php?ChangeStatusID=" + prestamo.id;
+                            }
+                        });
+                    });
+
+                    botonFinalizar.textContent = 'Finalizar';
+
+                    modalFooter.appendChild(botonFinalizar);
+                    modalFooter.appendChild(botonEliminarPrestamo);
+                    modalFooterEditar.appendChild(botonEditarPrestamo);
+
+
+
+                    filaPrestamo.addEventListener('click', (evento) => {
+                       console.log("dimos click a la fila");
+                       document.getElementById("identificacionUsuario").value =prestamo.identificacion;
+                       document.getElementById("numeropc").value = prestamo.modelo;
+                       document.getElementById("nombreUsuario").value  = prestamo.nombre;
+                       document.getElementById("dependencia").value = prestamo.dependencia;
+                       document.getElementById("fechaasignacion").value = prestamo.fechaequipo;
+                       document.getElementById("estado").value = prestamo.EstadoPrestamo;
+                       document.getElementById("observacion").value =prestamo.observacion;
+
+                       $(modalInfoPrestamoRelacionados).modal("show");
+                    });
+
+                    const tdEstadoPrestamo = document.createElement('td');
                     const estadoPrestamo = prestamo.EstadoPrestamo;
 
                     if (estadoPrestamo === 'EN_CURSO') {
@@ -630,10 +705,6 @@ return $sentencia->fetchAll(PDO::FETCH_ASSOC);
         });
     });
 </script>
-
-
-
-
 
 <?php include("../../estructura/footer.php"); ?>
 

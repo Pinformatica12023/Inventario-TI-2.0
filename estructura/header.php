@@ -1,5 +1,5 @@
 ﻿<?php
-// $url_base = "http://flawfws01.fla.local/InventarioTI2.0/";
+// $url_base = "http://flawfws01.flaeice.local/InventarioTI2.0/";
 
 // $url_base = "C:\xampp\htdocs\xampp\InventarioTi\InventarioTI2.0\InventarioTI2.0";
 $url_base = "http://localhost/xampp/InventarioTI2.0/";
@@ -63,13 +63,15 @@ if (!isset($_SESSION['usuario'])) {
         .card-transparent {
             background-color: rgba(255, 255, 255, 0.8);
             /* Cambia los valores RGB y el valor alfa (0.7) según tus preferencias */
+            /* background-color: #ffffff;
+            opacity: 0.5; */
         }
     
         
 
         .nav-link.active {
-            background-color: #83B633; /* Cambia el color de fondo */
-            color: #ffffff; /* Cambia el color del texto */
+            background-color: #cccccc; /* Cambia el color de fondo */
+            color: #ffffff;
             border-radius: 20px;
             
         }
@@ -88,7 +90,56 @@ if (!isset($_SESSION['usuario'])) {
     </header>
     <main>
 
-        <nav class="navbar navbar-expand  bg-light">
+        <nav class="navbar navbar-expand-lg   p-3">
+            <div class="container-fluid card-transparent">
+                <a class="navbar-brand text-dark fw-bold" href="#">InventarioTI</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+            
+                <div class=" collapse navbar-collapse  " id="navbarNavDropdown">
+                <ul class="navbar-nav ms-auto ">
+                    <li class="nav-item">
+                    <a class="nav-link active text-dark fw-bold" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link mx-2 text-dark fw-bold" href="<?php echo $url_base; ?>secciones/equipos/" data-tab="Equipos">Equipos</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link mx-2 text-dark fw-bold" href="<?php echo $url_base; ?>secciones/dispositivos/" data-tab="Dispositivos">Dispositivos</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link mx-2 text-dark fw-bold" href="<?php echo $url_base; ?>secciones/docks/" data-tab="Docks">Docks</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                    <a class="nav-link mx-2 dropdown-toggle text-dark fw-bold" href="#" id="navbarDropdownMenuLink" data-tab="Prestamos" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Préstamos
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <li><a class="dropdown-item text-dark fw-bold" href=" <?php echo $url_base; ?>secciones/prestamoequipos/">Préstamos Equipos</a></li>
+                        <li><a class="dropdown-item text-dark fw-bold" href="<?php echo $url_base; ?>secciones/prestamodispositivos/">Préstamos Dispositivos</a></li>
+                    </ul>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link mx-2 text-dark fw-bold" href="<?php echo $url_base; ?>secciones/usuarios/" data-tab="Usuarios">Usuarios</a>
+                    </li>
+                
+                </ul>
+                <ul class="navbar-nav ms-auto d-none d-lg-inline-flex">
+                    <ul class="text-end text-dark fw-bold">
+                        <a href="<?php echo $url_base; ?>cerrar.php">
+                        <svg xmlns="http://www.w3.org/2000/svg"  width="25" height="25" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/>
+                            <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
+                        </svg>
+                        </a>
+                    </ul>
+                </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- <nav class="navbar navbar-expand  bg-light">
             <ul class="nav navbar-nav card-transparent">
                 <li class="nav-item">
                     <a  class="nav-link active" href="<?php echo $url_base; ?>index.php" data-tab="Inicio" aria-current="page">Home<span class="visually-hidden">(current)</span> </a>
@@ -121,8 +172,8 @@ if (!isset($_SESSION['usuario'])) {
                     <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
                 </svg>
             </ul>
-        </nav>
-        <main class="container-fluid p-4 ">
+        </nav> -->
+    <main class="container-fluid p-4 ">
      
 <?php if (isset($_GET['mensaje'])) { ?>
     <script>

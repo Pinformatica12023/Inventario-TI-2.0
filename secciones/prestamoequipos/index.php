@@ -287,6 +287,8 @@ $lista_prestamoequipo = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                                                 <a class="btn btn-info text-light" href="editar.php?txtID=<?php echo $registro['id']; ?>" role="button">Editar</a>
                                             </div>
                                         </div>
+                                    
+                                    
                                     </div>
                                 </div>
                             </div>

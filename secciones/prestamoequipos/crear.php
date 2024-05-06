@@ -118,23 +118,46 @@ $lista_equipos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
             <div class="row">
 
             
+               
+                <div class="mb-3 col-lg-6">
+                    <label for="dispositivo" class="form-label required">Usuario</label>
+                    <?php 
+                    $usuarios = $conexion->prepare("SELECT * FROM usuarios");
+                    $usuarios->execute();
+                    $lista_usuarios = $usuarios->fetchAll(PDO::FETCH_ASSOC);
+                    ?>
+                    <select class="form-select" name="nombre" id="usuarios">
+                        <?php foreach ($lista_usuarios as $registro) { ?>
+                            <option value="<?php echo $registro['identificacion']; ?>">
+                                <?php echo $registro['nombre']; ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+
+                <div class="mb-3 col-lg-6">
+                    <label for="dispositivo" class="form-label required">equipo</label>
+                    <select class="form-select" name="modelo" id="modelo">
+                        <?php foreach ($lista_equipos as $registro) { ?>
+                            <option value="<?php echo $registro['id']; ?>">
+                                <?php echo $registro['numeropc']; ?></option>
+                        <?php } ?>
+                    </select>
+                </div>
+
                 <div class=" col-lg-6 mb-3">
                     <label for="identificacion" class="form-label required">Identificación</label>
                     <input type="text" class="form-control" name="identificacion" id="identificacion">
                     <span id="mensajeErrorIdentificacion" style="display: none; color: red;">Completa este campo por favor</span>
                 </div>
 
-                <div class="mb-3 col-lg-6">
-                    <label for="modelo" class="form-label required">Equipo</label>
-                    <input type="text" class="form-control" name="modelo" id="modelo">
-                    <span id="mensajeErrorEquipo" style="display: none; color: red;">Completa este campo por favor</span>
-                </div>
 
-
-                <div class="mb-3 col-lg-6">
+                <!-- <div class="mb-3 col-lg-6">
                     <label for="nombre" class="form-label required">Nombre</label>
                     <input type="text" class="form-control" name="nombre" id="nombre" readonly>
-                </div>
+                </div> -->
+
+              
+                
 
                 <div class="mb-3 col-lg-6">
                     <label for="serialpc" class="form-label required">Serial PC</label>
@@ -161,28 +184,12 @@ $lista_equipos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                     <input type="text" class="form-control" name="marca" id="marca">
                 </div>
 
-             
-
                 <script>
                     // Obtener la fecha actual en el formato YYYY-MM-DD
                     let today = new Date().toISOString().substr(0, 10);
-
                     // Establecer la fecha actual como valor predeterminado
                     document.getElementById("fechaequipo").value = today;
                 </script>
-
-                <!-- <div class="mb-3">
-                    <label for="" class="form-label">Acta:</label>
-                    <input type="file" class="form-control" name="acta" id="acta" aria-describedby="helpId" placeholder="">
-                </div> -->
-
-                <!-- <div class="mb-3">
-                    <label for="estado" class="form-label required">Estado</label>
-                    <select class="form-select form-select-sm" name="estado" id="estado">
-                        <option value="EN_CURSO">EN CURSO</option>
-                        <option value="FINALIZADO">FINALIZADO</option>
-                    </select>
-                </div> -->
 
                 <div class="mb-3">
                     <label for="observacion" class="form-label">Observación</label>
@@ -204,9 +211,18 @@ $lista_equipos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
         <!-- Autocompletado de usuarios -->
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
+
+            $(document).ready(function(){
+                $('#usuarios').select2();
+                $('#modelo').select2();
+            })
+
+ 
+
             $(document).ready(function() {
-                $('#identificacion').on('input', function() {
+                $('#usuarios').on('change', function() {
                     var identificacion = $(this).val();
+                    console.log(identificacion);
 
                     $.ajax({
                         method: "POST",
@@ -216,7 +232,8 @@ $lista_equipos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                         },
                         success: function(response) {
                             var usuario = JSON.parse(response);
-                            $('#nombre').val(usuario.nombre);
+                            console.log(usuario);
+                            $('#identificacion').val(usuario.identificacion);
                             $('#dependencia').val(usuario.dependencia);
                         },
                         error: function(xhr, status, error) {
@@ -225,13 +242,38 @@ $lista_equipos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                     });
                 });
             });
+
+            // $(document).ready(function() {
+            //     $('#identificacion').on('input', function() {
+            //         var identificacion = $(this).val();
+
+            //         $.ajax({
+            //             method: "POST",
+            //             url: "../../buscarusuario.php",
+            //             data: {
+            //                 identificacion: identificacion
+            //             },
+            //             success: function(response) {
+            //                 var usuario = JSON.parse(response);
+            //                 $('#nombre').val(usuario.nombre);
+            //                 $('#dependencia').val(usuario.dependencia);
+            //             },
+            //             error: function(xhr, status, error) {
+            //                 // Manejo de errores de la solicitud AJAX
+            //             }
+            //         });
+            //     });
+            // });
         </script>
+
+
 
         <!-- JavaScript/jQuery para autocompletar los campos de serialpc, serialcargador y marca -->
         <script>
             $(document).ready(function() {
                 $('#modelo').on('change', function() {
                     var modeloSeleccionado = $(this).val();
+                    console.log(modeloSeleccionado);
 
                     $.ajax({
                         method: "POST",
