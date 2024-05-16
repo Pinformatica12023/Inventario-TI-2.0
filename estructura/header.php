@@ -2,7 +2,7 @@
 // $url_base = "http://flawfws01.flaeice.local/InventarioTI2.0/";
 
 // $url_base = "C:\xampp\htdocs\xampp\InventarioTi\InventarioTI2.0\InventarioTI2.0";
-$url_base = "http://localhost/xampp/InventarioTI2.0/";
+$url_base = "http://localhost/InventarioTI2.0/";
 
 
 // URL base de la aplicación.

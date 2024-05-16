@@ -8,7 +8,7 @@
 $server = "127.0.0.1";
 $bd = "inventario";
 $user = "root";
-$password = "";
+$password = "Ti2023*";
 
 
 try{

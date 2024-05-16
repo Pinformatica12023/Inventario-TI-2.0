@@ -23,7 +23,7 @@ if (isset($_GET['txtID'])) {
 }
 
 //Mostrar registros
-$sentencia = $conexion->prepare("SELECT * FROM dispositivos");
+$sentencia = $conexion->prepare("SELECT * FROM dispositivos ORDER BY cantidad DESC");
 $sentencia->execute();
 $lista_dispositivos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
@@ -89,7 +89,7 @@ $lista_dispositivos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
     
                                     <td scope="row" ><?php echo $registro['id']; ?></td>
                                     <td ><?php echo $registro['nombredeldispositivo']; ?></td>
-                                    <td ><?php echo $registro['cantidad']; ?></td>
+                                    <td class="<?php if($registro['cantidad']<=0){?>text-danger<?php }else if($registro['cantidad']>=1 && $registro['cantidad']<=3){?> text-warning  <?php }else{?>text-success <?php } ?>" ><?php echo $registro['cantidad']; ?></td>
                                     <td> <?php  echo $registro['CantidadPrestamo']?></td>
                                     <td><?php  echo ($registro['cantidad']+$registro['CantidadPrestamo'])?></td>
                                     <!-- <td >

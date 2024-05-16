@@ -6,7 +6,7 @@ include("../../bd.php");
 if ($_POST) {
     //Recolectamos los datos del método POST (Datos activo)
     $identificacion = (isset($_POST["identificacion"]) ? $_POST["identificacion"] : "");
-    $nombre = (isset($_POST["nombre"]) ? $_POST["nombre"] : "");
+    $nombre = (isset($_POST["nombreUsuario"]) ? $_POST["nombreUsuario"] : "");
     $dependencia = (isset($_POST["dependencia"]) ? $_POST["dependencia"] : "");
     $modelo = (isset($_POST["modelo"]) ? $_POST["modelo"] : "");
     $serialpc = (isset($_POST["serialpc"]) ? $_POST["serialpc"] : "");
@@ -16,7 +16,7 @@ if ($_POST) {
     // $acta = (isset($_FILES["acta"]['name']) ? $_FILES["acta"]['name'] : "");
     // $estado = (isset($_POST["estado"]) ? $_POST["estado"] : "");
     $observacion = (isset($_POST["observacion"]) ? $_POST["observacion"] : "");
-
+  
 
     $sentencia  = $conexion->prepare("SELECT * FROM prestamoequipo WHERE modelo = :modelo && EstadoPrestamo = 'EN_CURSO';");
     $sentencia->bindParam(":modelo",$modelo);
@@ -115,18 +115,19 @@ $lista_equipos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
 
 
         <form action="" id="formularioCrearPrestamo" method="post" enctype="multipart/form-data">
+
             <div class="row">
 
-            
-               
-                <div class="mb-3 col-lg-6">
-                    <label for="dispositivo" class="form-label required">Usuario</label>
+        
+                <div class="mb-3 col-lg-6 ">
+                   
                     <?php 
                     $usuarios = $conexion->prepare("SELECT * FROM usuarios");
                     $usuarios->execute();
                     $lista_usuarios = $usuarios->fetchAll(PDO::FETCH_ASSOC);
                     ?>
-                    <select class="form-select" name="nombre" id="usuarios">
+                    <select class="form-select "  placeholder="Ingrese Nombre de usuario" id="usuarios">
+                       <option></option>
                         <?php foreach ($lista_usuarios as $registro) { ?>
                             <option value="<?php echo $registro['identificacion']; ?>">
                                 <?php echo $registro['nombre']; ?></option>
@@ -135,14 +136,36 @@ $lista_equipos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                 </div>
 
                 <div class="mb-3 col-lg-6">
-                    <label for="dispositivo" class="form-label required">equipo</label>
-                    <select class="form-select" name="modelo" id="modelo">
-                        <?php foreach ($lista_equipos as $registro) { ?>
-                            <option value="<?php echo $registro['id']; ?>">
-                                <?php echo $registro['numeropc']; ?></option>
-                        <?php } ?>
+                   
+                    <select class="form-select" id="modelo">
+                    <option></option>
+                        <?php foreach ($lista_equipos as $registro) {
+                            if($registro['Estado']==='DISPONIBLE'){
+                                ?>
+                                <option value="<?php echo $registro['numeropc']; ?>">
+                                    <?php echo $registro['numeropc']; ?></option>
+                            <?php
+                            }
+                        } ?>
                     </select>
                 </div>
+
+               
+
+
+                <div class="col-lg-6">
+                    <label for="usuario" class="form-label required">Nombre Usuario</label>
+                    <input type="text" class="form-control" name="nombreUsuario" id="nombreUsuario">
+                        
+                </div>
+
+                <div class="col-lg-6">
+                    <label for="equipo" class="form-label required">Numero Pc</label>
+                    <input type="text" class="form-control" name="modelo" id="numeropc">
+                        
+                </div>
+
+               
 
                 <div class=" col-lg-6 mb-3">
                     <label for="identificacion" class="form-label required">Identificación</label>
@@ -213,8 +236,12 @@ $lista_equipos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
         <script>
 
             $(document).ready(function(){
-                $('#usuarios').select2();
-                $('#modelo').select2();
+                $('#usuarios').select2({
+                    placeholder:"Ingrese Nombre de usuario"
+                });
+                $('#modelo').select2({
+                    placeholder:"Seleccione el equipo asignar"
+                });
             })
 
  
@@ -234,6 +261,7 @@ $lista_equipos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                             var usuario = JSON.parse(response);
                             console.log(usuario);
                             $('#identificacion').val(usuario.identificacion);
+                            $('#nombreUsuario').val(usuario.nombre);
                             $('#dependencia').val(usuario.dependencia);
                         },
                         error: function(xhr, status, error) {
@@ -243,33 +271,6 @@ $lista_equipos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                 });
             });
 
-            // $(document).ready(function() {
-            //     $('#identificacion').on('input', function() {
-            //         var identificacion = $(this).val();
-
-            //         $.ajax({
-            //             method: "POST",
-            //             url: "../../buscarusuario.php",
-            //             data: {
-            //                 identificacion: identificacion
-            //             },
-            //             success: function(response) {
-            //                 var usuario = JSON.parse(response);
-            //                 $('#nombre').val(usuario.nombre);
-            //                 $('#dependencia').val(usuario.dependencia);
-            //             },
-            //             error: function(xhr, status, error) {
-            //                 // Manejo de errores de la solicitud AJAX
-            //             }
-            //         });
-            //     });
-            // });
-        </script>
-
-
-
-        <!-- JavaScript/jQuery para autocompletar los campos de serialpc, serialcargador y marca -->
-        <script>
             $(document).ready(function() {
                 $('#modelo').on('change', function() {
                     var modeloSeleccionado = $(this).val();
@@ -282,62 +283,75 @@ $lista_equipos = $sentencia->fetchAll(PDO::FETCH_ASSOC);
                             modelo: modeloSeleccionado
                         },
                         success: function(response) {
+                           
                             var datosEquipo = JSON.parse(response);
+                            console.log(datosEquipo);
+                            $('#numeropc').val(datosEquipo.numeropc);
                             $('#serialpc').val(datosEquipo.serialpc);
                             $('#marca').val(datosEquipo.marca);
                             $('#serialcargador').val(datosEquipo.serialcargador);
                         },
                         error: function(xhr, status, error) {
                             // Manejo de errores de la solicitud AJAX
+                            console.log(error);
                         }
                     });
                 });
             });
+
+            function procesarPrestamoEquipo(event) {
+          
+          // Evitamos que el formulario se envíe automáticamente
+          event.preventDefault();
+          console.log("llegamos al formulario");
+          // Obtenemos el valor del campo numeropc y lo recortamos
+          var identificacion = document.getElementById('identificacion').value.trim();
+          console.log(identificacion);
+          var equipo = document.getElementById('modelo').value.trim();
+          console.log(equipo);
+          var mensajeErrorIdentificacion =document.getElementById('mensajeErrorIdentificacion');
+          var mensajeErrorEquipo =document.getElementById('mensajeErrorIdentificacion');
+          if(identificacion === '' || equipo === ''){
+              if(identificacion==''){
+                  // Mostramos el mensaje de error
+                  mensajeErrorIdentificacion.style.display = 'inline';
+              }else{
+                  // En caso contrario, ocultamos el mensaje de error (si estaba visible)
+                  mensajeErrorIdentificacion.style.display = 'none';
+              }
+              
+              if(equipo==''){
+                  // Mostramos el mensaje de error
+                  mensajeErrorEquipo.style.display = 'inline';
+              }else{
+                  // En caso contrario, ocultamos el mensaje de error (si estaba visible)
+                  mensajeErrorEquipo.style.display = 'none';
+              }
+          }else{
+            console.log("vamos a enviarlos");
+              // En caso contrario, ocultamos el mensaje de error (si estaba visible)
+              mensajeErrorIdentificacion.style.display = 'none';
+              mensajeErrorEquipo.style.display = 'none';
+              form.submit();
+        }
+      }
+      
+        var form = document.getElementById('formularioCrearPrestamo');
+        // Agregamos un listener para el evento submit del formulario
+        form.addEventListener('submit',procesarPrestamoEquipo );
         </script>
+
+
+
+        <!-- JavaScript/jQuery para autocompletar los campos de serialpc, serialcargador y marca -->
+    
 
 
     </div>
     <div class="card-footer text-muted"></div>
 </div>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Seleccionamos el formulario por su ID
-        var form = document.getElementById('formularioCrearPrestamo');
 
-        // Agregamos un listener para el evento submit del formulario
-        form.addEventListener('submit', function(event) {
-            // Evitamos que el formulario se envíe automáticamente
-            event.preventDefault();
-
-            // Obtenemos el valor del campo numeropc y lo recortamos
-            var identificacion = document.getElementById('identificacion').value.trim();
-            var equipo = document.getElementById('modelo').value.trim();
-            if(identificacion === '' || equipo === ''){
-                if(identificacion==''){
-                    // Mostramos el mensaje de error
-                    document.getElementById('mensajeErrorIdentificacion').style.display = 'inline';
-                }else{
-                    // En caso contrario, ocultamos el mensaje de error (si estaba visible)
-                    document.getElementById('mensajeErrorIdentificacion').style.display = 'none';
-                }
-                
-                if(equipo==''){
-                    // Mostramos el mensaje de error
-                    document.getElementById('mensajeErrorEquipo').style.display = 'inline';
-                }else{
-                    // En caso contrario, ocultamos el mensaje de error (si estaba visible)
-                    document.getElementById('mensajeErrorEquipo').style.display = 'none';
-                }
-            }else{
-                // En caso contrario, ocultamos el mensaje de error (si estaba visible)
-                document.getElementById('mensajeErrorIdentificacion').style.display = 'none';
-                document.getElementById('mensajeErrorEquipo').style.display = 'none';
-                form.submit();
-            }
-        });
-    });
-</script>
 
 
 

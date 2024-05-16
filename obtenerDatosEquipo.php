@@ -5,7 +5,7 @@ include("bd.php");
 if ($_POST && isset($_POST['modelo'])) {
     $modeloSeleccionado = $_POST['modelo'];
 
-    $sentencia = $conexion->prepare("SELECT serialpc,serialcargador, marca FROM equipos WHERE id= :id");
+    $sentencia = $conexion->prepare("SELECT * FROM equipos WHERE numeropc =  :id");
     $sentencia->bindParam(":id", $modeloSeleccionado);
     $sentencia->execute();
     
